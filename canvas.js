@@ -1,49 +1,53 @@
-let canvas;
-
-exports.validateCanvas = arguments => {
-  const width = +arguments[0];
-  const height = +arguments[0];
-  if (canvas) {
-    throw new Error("Error: Can't recreate canvas!");
-  } else if (arguments.length !== 2) {
-    throw new Error("Error: I need two coordinates for a canvas!");
-  } else if (Number.isNaN(width) || Number.isNaN(height)) {
-    throw new Error("Coordinates need to be numbers!");
-  } else if (!Number.isInteger(width) || !Number.isInteger(height)) {
-    throw new Error("Coordinates need to be integers!");
-  } else if (arguments[0] < 2) {
-    throw new Error("Error: Width must be at least 2!");
-  } else if (arguments[1] < 2) {
-    throw new Error("Error: Height must be at least 2!");
+module.exports = class Canvas {
+  constructor(args) {
+    this.validateCanvas(args);
   }
-};
 
-exports.createCanvas = arguments => {
-  const width = +arguments[0] + 2;
-  const height = +arguments[1] + 2;
-
-  initializeCanvas(width, height);
-  printCanvas();
-};
-
-const initializeCanvas = (width, height) => {
-  canvas = [];
-  for (let row = 0; row < height; row++) {
-    canvas[row] = [];
-    for (let col = 0; col < width; col++) {
-      if (row === 0 || row === height - 1) {
-        canvas[row][col] = "-";
-      } else if (col === 0 || col === width - 1) {
-        canvas[row][col] = "|";
-      } else {
-        canvas[row][col] = " ";
+  validateCanvas(args) {
+    if (args.length !== 2) {
+      throw new Error("Error: I need two coordinates for a canvas!");
+    } else {
+      this.width = +args[0] + 2;
+      this.height = +args[1] + 2;
+      if (Number.isNaN(this.width) || Number.isNaN(this.height)) {
+        throw new Error("Coordinates need to be numbers!");
+      } else if (
+        !Number.isInteger(this.width) ||
+        !Number.isInteger(this.height)
+      ) {
+        throw new Error("Coordinates need to be integers!");
+      } else if (this.width < 4) {
+        throw new Error("Error: Width must be at least 2!");
+      } else if (this.height < 4) {
+        throw new Error("Error: Height must be at least 2!");
       }
     }
   }
-};
 
-const printCanvas = () => {
-  for (let row = 0, height = canvas.length; row < height; row++) {
-    console.log(canvas[row].join(""));
+  createCanvas() {
+    this.initializeCanvas(this.width, this.height);
+    this.printCanvas();
+  }
+
+  initializeCanvas() {
+    this.canvas = [];
+    for (let row = 0; row < this.height; row++) {
+      this.canvas[row] = [];
+      for (let col = 0; col < this.width; col++) {
+        if (row === 0 || row === this.height - 1) {
+          this.canvas[row][col] = "-";
+        } else if (col === 0 || col === this.width - 1) {
+          this.canvas[row][col] = "|";
+        } else {
+          this.canvas[row][col] = " ";
+        }
+      }
+    }
+  }
+
+  printCanvas() {
+    for (let row = 0; row < this.height; row++) {
+      console.log(this.canvas[row].join(""));
+    }
   }
 };

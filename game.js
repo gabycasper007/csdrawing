@@ -1,4 +1,4 @@
-const canvas = require("./canvas");
+const Canvas = require("./Canvas");
 
 exports.askQuestion = () => {
   process.stdout.write("\nenter command: ");
@@ -20,16 +20,19 @@ exports.processData = (data, prompt) => {
  * Displays canvas, quits or throws
  */
 exports.giveAnswer = (data, prompt) => {
-  const [command, ...arguments] = data.split(" ");
+  const [command, ...args] = data.split(" ");
+  let canvas;
   try {
     switch (command) {
       case "Q":
         prompt.emit("end");
         break;
       case "C":
-        canvas.validateCanvas(arguments);
-        canvas.createCanvas(arguments);
+        canvas = new Canvas(args);
+        canvas.createCanvas();
         prompt.emit("question");
+        break;
+      case "L":
         break;
       default:
         throw new Error("Wrong command");
