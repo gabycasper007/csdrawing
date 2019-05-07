@@ -24,20 +24,43 @@ module.exports = class Canvas {
     }
   }
 
-  drawLine(args) {
+  drawLine(color, args) {
     this.validateCanvas();
     this.validateInputs(args, 4);
+    this.validateColor(color);
+    this.validateBoundaries(...args);
     this.validateLine(...args);
-    this.createLine(...args);
+    this.createLine(color, ...args);
     this.printCanvas();
   }
 
-  createLine(x1, y1, x2, y2) {
-    console.log("Starting to create line", this.canvas[y2][x2]);
+  createLine(color, x1, y1, x2, y2) {
     for (let row = x1; row <= x2; row++) {
       for (let col = y1; col <= y2; col++) {
-        this.canvas[col][row] = "x";
+        this.canvas[col][row] = color;
       }
+    }
+  }
+
+  drawRectangle(color, args) {
+    this.validateCanvas();
+    this.validateInputs(args, 4);
+    this.validateColor(color);
+    this.validateBoundaries(...args);
+    this.createRectangle(color, ...args);
+    this.printCanvas();
+  }
+
+  createRectangle(color, x1, y1, x2, y2) {
+    this.createLine(color, x1, y1, x2, y1);
+    this.createLine(color, x1, y1, x1, y2);
+    this.createLine(color, x2, y1, x2, y2);
+    this.createLine(color, x1, y2, x2, y2);
+  }
+
+  validateColor(color) {
+    if (typeof color !== "string" || color.length !== 1) {
+      throw new Error("Color must be a one character");
     }
   }
 
@@ -47,18 +70,24 @@ module.exports = class Canvas {
     }
   }
 
-  validateLine(x1, y1, x2, y2) {
+  validateBoundaries(x1, y1, x2, y2) {
     if (
       x1 < 1 ||
       x2 < 1 ||
       y1 < 1 ||
       y2 < 1 ||
-      x1 > this.width ||
-      x2 > this.width ||
-      y1 > this.height ||
-      y2 > this.height
+      x1 > this.width - 2 ||
+      x2 > this.width - 2 ||
+      y1 > this.height - 2 ||
+      y2 > this.height - 2
     ) {
       throw new Error("Coordinates out of boundary");
+    }
+  }
+
+  validateLine(x1, y1, x2, y2) {
+    if (x1 !== x2 && y1 !== y2) {
+      throw new Error("I can only draw straight lines so far!");
     }
   }
 

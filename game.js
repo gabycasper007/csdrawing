@@ -33,7 +33,11 @@ exports.giveAnswer = (data, prompt) => {
         prompt.emit("question");
         break;
       case "L":
-        canvas.drawLine(args);
+        canvas.drawLine("x", args);
+        prompt.emit("question");
+        break;
+      case "R":
+        canvas.drawRectangle("x", args);
         prompt.emit("question");
         break;
       case "":
