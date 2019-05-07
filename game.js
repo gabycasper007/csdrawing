@@ -29,6 +29,7 @@ exports.giveAnswer = (data, prompt) => {
         break;
       case "C":
         canvas.createCanvas(args);
+        canvas.printCanvas();
         prompt.emit("question");
         break;
       case "L":

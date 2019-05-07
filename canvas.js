@@ -16,7 +16,7 @@ module.exports = class Canvas {
         }
       }
     }
-    this.printCanvas();
+    return this;
   }
 
   printCanvas() {
@@ -26,20 +26,14 @@ module.exports = class Canvas {
   }
 
   drawLine(color, coords) {
-    this._validateCanvas();
-    this._validateInputs(coords, 4);
-    this._validateColor(color);
-    this._validateBoundaries(coords);
+    this._validateShape(color, coords);
     this._validateLine(...coords);
     this._createLine(color, ...coords);
     this.printCanvas();
   }
 
   drawRectangle(color, coords) {
-    this._validateCanvas();
-    this._validateInputs(coords, 4);
-    this._validateColor(color);
-    this._validateBoundaries(coords);
+    this._validateShape(color, coords);
     this._createRectangle(color, ...coords);
     this.printCanvas();
   }
@@ -73,6 +67,7 @@ module.exports = class Canvas {
         this.canvas[col][row] = color;
       }
     }
+    return this;
   }
 
   _createRectangle(color, x1, y1, x2, y2) {
@@ -80,6 +75,14 @@ module.exports = class Canvas {
     this._createLine(color, x1, y1, x1, y2);
     this._createLine(color, x2, y1, x2, y2);
     this._createLine(color, x1, y2, x2, y2);
+    return this;
+  }
+
+  _validateShape(color, coords) {
+    this._validateCanvas();
+    this._validateInputs(coords, 4);
+    this._validateColor(color);
+    this._validateBoundaries(coords);
   }
 
   _validateColor(color) {
