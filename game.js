@@ -29,7 +29,6 @@ exports.giveAnswer = (data, prompt) => {
         break;
       case "C":
         canvas.createCanvas(args);
-        canvas.printCanvas();
         prompt.emit("question");
         break;
       case "L":
@@ -38,6 +37,14 @@ exports.giveAnswer = (data, prompt) => {
         break;
       case "R":
         canvas.drawRectangle("x", args);
+        prompt.emit("question");
+        break;
+      case "B":
+        canvas.drawBucket(args);
+        prompt.emit("question");
+        break;
+      case "P":
+        canvas.printCanvas();
         prompt.emit("question");
         break;
       case "":
