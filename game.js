@@ -33,6 +33,7 @@ exports.giveAnswer = (data, prompt) => {
         prompt.emit("question");
         break;
       case "L":
+        canvas.createLine(args);
         break;
       default:
         throw new Error("Wrong command");

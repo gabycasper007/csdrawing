@@ -50,4 +50,8 @@ module.exports = class Canvas {
       console.log(this.canvas[row].join(""));
     }
   }
+
+  createLine(args) {
+    console.log("Look Ma, made a line!", args);
+  }
 };
