@@ -6,4 +6,6 @@ process.stdin.on("data", data => game.processData(data, prompt));
 prompt.on("question", game.askQuestion);
 prompt.on("answer", data => game.giveAnswer(data, prompt));
 prompt.on("end", game.endGame);
-prompt.emit("question"); // START THE GAME
+
+// START THE GAME
+prompt.emit("question");

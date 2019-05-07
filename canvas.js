@@ -1,22 +1,37 @@
 module.exports = class Canvas {
-  createCanvas(coords) {
+  constructor() {
+    this.edges = 2;
+  }
+
+  setCanvas(coords) {
     this._validateInputs(coords, 2);
+    this._setCanvasDimensions(coords);
+    this._drawCanvas();
+    return this;
+  }
+
+  _drawCanvas() {
     this.canvas = [];
-    this.width = +coords[0] + 2;
-    this.height = +coords[1] + 2;
+    let isFirstRow, isFirstColumn, isLastRaw, isLastColumn;
+
     for (let row = 0; row < this.height; row++) {
       this.canvas[row] = [];
+      isFirstRow = row === 0;
+      isLastRaw = row === this.height - 1;
+
       for (let col = 0; col < this.width; col++) {
-        if (row === 0 || row === this.height - 1) {
+        isFirstColumn = col === 0;
+        isLastColumn = col === this.width - 1;
+
+        if (isFirstRow || isLastRaw) {
           this.canvas[row][col] = "-";
-        } else if (col === 0 || col === this.width - 1) {
+        } else if (isFirstColumn || isLastColumn) {
           this.canvas[row][col] = "|";
         } else {
           this.canvas[row][col] = " ";
         }
       }
     }
-    return this;
   }
 
   printCanvas() {
@@ -48,8 +63,13 @@ module.exports = class Canvas {
     this.printCanvas();
   }
 
+  _setCanvasDimensions(coords) {
+    this.width = parseInt(coords[0]) + this.edges;
+    this.height = parseInt(coords[1]) + this.edges;
+  }
+
   _bucketFill(color, x, y) {
-    if (this._outsideBoundaries(x, y) || this.canvas[y][x] !== " ") {
+    if (this._isOutsideBoundaries(x, y) || this.canvas[y][x] !== " ") {
       return;
     }
     if (this.canvas[y][x] == " ") {
@@ -98,8 +118,8 @@ module.exports = class Canvas {
   }
 
   _validateBoundaries(coords) {
-    for (let i = 0, n = coords.length; i < n - 1; i += 2) {
-      if (this._outsideBoundaries(coords[i], coords[i + 1])) {
+    for (let i = 0, length = coords.length; i < length - 1; i += 2) {
+      if (this._isOutsideBoundaries(coords[i], coords[i + 1])) {
         throw new Error("Coordinates out of boundary");
       }
     }
@@ -110,8 +130,13 @@ module.exports = class Canvas {
    * @param {Number} x
    * @param {Number} y
    */
-  _outsideBoundaries(x, y) {
-    return x < 1 || x > this.width - 2 || y < 1 || y > this.height - 2;
+  _isOutsideBoundaries(x, y) {
+    const xIsTooSmall = x < 1;
+    const yIsTooSmall = y < 1;
+    const xIsTooBig = x > this.width - this.edges;
+    const yIsTooBig = y > this.height - this.edges;
+
+    return xIsTooSmall || yIsTooSmall || xIsTooBig || yIsTooBig;
   }
 
   /**
@@ -122,7 +147,9 @@ module.exports = class Canvas {
    * @param {Number} y2
    */
   _validateLine(x1, y1, x2, y2) {
-    if (x1 !== x2 && y1 !== y2) {
+    const isLineDiagonal = x1 !== x2 && y1 !== y2;
+
+    if (isLineDiagonal) {
       throw new Error("I can only draw straight lines so far!");
     }
   }
@@ -131,18 +158,22 @@ module.exports = class Canvas {
    * Checks the number of coordinates.
    * All coordinates MUST be integers and larger than 0
    * @param {Array} coords
-   * @param {Number} len Number of coordinates
+   * @param {Number} length Number of coordinates
    */
-  _validateInputs(coords, len) {
-    if (coords.length !== len) {
-      throw new Error(`I need ${len} coordinates!`);
+  _validateInputs(coords, length) {
+    const hasWrongNumberOfCoords = coords.length !== length;
+
+    if (hasWrongNumberOfCoords) {
+      throw new Error(`I need ${length} coordinates!`);
     } else {
-      for (let i = 0; i < len; i++) {
-        if (Number.isNaN(+coords[i])) {
+      for (let i = 0, coord; i < length; i++) {
+        coord = parseFloat(coords[i]);
+
+        if (Number.isNaN(coord)) {
           throw new Error("Coordinates need to be numbers!");
-        } else if (!Number.isInteger(+coords[i])) {
+        } else if (!Number.isInteger(coord)) {
           throw new Error("Coordinates need to be integers!");
-        } else if (+coords[i] < 1) {
+        } else if (coord < 1) {
           throw new Error("Coordinates must be at least 1!");
         }
       }

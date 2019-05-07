@@ -10,11 +10,11 @@ exports.endGame = () => {
 };
 
 exports.processData = (data, prompt) => {
-  const newData = data
+  const parsedData = data
     .toString()
     .trim()
     .toUpperCase();
-  prompt.emit("answer", newData);
+  prompt.emit("answer", parsedData);
 };
 
 /**
@@ -28,7 +28,7 @@ exports.giveAnswer = (data, prompt) => {
         prompt.emit("end");
         break;
       case "C":
-        canvas.createCanvas(args);
+        canvas.setCanvas(args);
         canvas.printCanvas();
         prompt.emit("question");
         break;
