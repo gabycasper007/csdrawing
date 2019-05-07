@@ -1,20 +1,27 @@
 let canvas;
 
 exports.validateCanvas = arguments => {
+  const width = +arguments[0];
+  const height = +arguments[0];
   if (canvas) {
     throw new Error("Error: Can't recreate canvas!");
   } else if (arguments.length !== 2) {
     throw new Error("Error: I need two coordinates for a canvas!");
+  } else if (Number.isNaN(width) || Number.isNaN(height)) {
+    throw new Error("Coordinates need to be numbers!");
+  } else if (!Number.isInteger(width) || !Number.isInteger(height)) {
+    throw new Error("Coordinates need to be integers!");
   } else if (arguments[0] < 2) {
-    throw new Error("Error: Width must be larger than 2!");
+    throw new Error("Error: Width must be at least 2!");
   } else if (arguments[1] < 2) {
-    throw new Error("Error: Height must be larger than 2!");
+    throw new Error("Error: Height must be at least 2!");
   }
 };
 
 exports.createCanvas = arguments => {
   const width = +arguments[0] + 2;
   const height = +arguments[1] + 2;
+
   initializeCanvas(width, height);
   printCanvas();
 };
