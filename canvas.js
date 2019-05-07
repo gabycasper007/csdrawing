@@ -1,36 +1,9 @@
 module.exports = class Canvas {
-  constructor(args) {
-    this.validateCanvas(args);
-  }
-
-  validateCanvas(args) {
-    if (args.length !== 2) {
-      throw new Error("Error: I need two coordinates for a canvas!");
-    } else {
-      this.width = +args[0] + 2;
-      this.height = +args[1] + 2;
-      if (Number.isNaN(this.width) || Number.isNaN(this.height)) {
-        throw new Error("Coordinates need to be numbers!");
-      } else if (
-        !Number.isInteger(this.width) ||
-        !Number.isInteger(this.height)
-      ) {
-        throw new Error("Coordinates need to be integers!");
-      } else if (this.width < 4) {
-        throw new Error("Error: Width must be at least 2!");
-      } else if (this.height < 4) {
-        throw new Error("Error: Height must be at least 2!");
-      }
-    }
-  }
-
-  createCanvas() {
-    this.initializeCanvas(this.width, this.height);
-    this.printCanvas();
-  }
-
-  initializeCanvas() {
+  createCanvas(args) {
+    this.validateInputs(args, 2);
     this.canvas = [];
+    this.width = +args[0] + 2;
+    this.height = +args[1] + 2;
     for (let row = 0; row < this.height; row++) {
       this.canvas[row] = [];
       for (let col = 0; col < this.width; col++) {
@@ -51,7 +24,57 @@ module.exports = class Canvas {
     }
   }
 
-  createLine(args) {
-    console.log("Look Ma, made a line!", args);
+  drawLine(args) {
+    this.validateCanvas();
+    this.validateInputs(args, 4);
+    this.validateLine(...args);
+    this.createLine(...args);
+    this.printCanvas();
+  }
+
+  createLine(x1, y1, x2, y2) {
+    console.log("Starting to create line", this.canvas[y2][x2]);
+    for (let row = x1; row <= x2; row++) {
+      for (let col = y1; col <= y2; col++) {
+        this.canvas[col][row] = "x";
+      }
+    }
+  }
+
+  validateCanvas() {
+    if (!this.canvas) {
+      throw new Error("Canvas is not initalized!");
+    }
+  }
+
+  validateLine(x1, y1, x2, y2) {
+    if (
+      x1 < 1 ||
+      x2 < 1 ||
+      y1 < 1 ||
+      y2 < 1 ||
+      x1 > this.width ||
+      x2 > this.width ||
+      y1 > this.height ||
+      y2 > this.height
+    ) {
+      throw new Error("Coordinates out of boundary");
+    }
+  }
+
+  validateInputs(args, expectedInputs) {
+    if (args.length !== expectedInputs) {
+      throw new Error(`I need ${expectedInputs} coordinates!`);
+    } else {
+      for (let i = 0; i < expectedInputs; i++) {
+        if (Number.isNaN(+args[i])) {
+          throw new Error("Coordinates need to be numbers!");
+        } else if (!Number.isInteger(+args[i])) {
+          throw new Error("Coordinates need to be integers!");
+        } else if (+args[i] < 1) {
+          throw new Error("Coordinates must be at least 1!");
+        }
+      }
+    }
   }
 };
