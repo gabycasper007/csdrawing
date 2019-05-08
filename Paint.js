@@ -35,8 +35,6 @@ module.exports = class Paint {
     const [commandType, ...commandArgs] = command.split(" ");
 
     switch (commandType.trim().toUpperCase()) {
-      case this.commands.QUIT:
-        return this._quit();
       case this.commands.CANVAS:
         return this._start(commandArgs);
       case this.commands.LINE:
@@ -45,6 +43,8 @@ module.exports = class Paint {
         return this._playRectangle(commandArgs);
       case this.commands.BUCKET:
         return this._playBucket(commandArgs);
+      case this.commands.QUIT:
+        return this._quit();
       case this.commands.PRINT:
         return this._showScreen(prompt);
       case this.commands.EMPTY:
@@ -52,10 +52,6 @@ module.exports = class Paint {
       default:
         throw new Error("Wrong command");
     }
-  }
-
-  _quit() {
-    process.stdin.pause();
   }
 
   _start(args) {
@@ -83,12 +79,16 @@ module.exports = class Paint {
     this.prompt.emit("wait_for_command");
   }
 
+  _askAgain() {
+    this.prompt.emit("wait_for_command");
+  }
+
   _showScreen() {
     this.canvas.printCanvas();
     this.prompt.emit("wait_for_command");
   }
 
-  _askAgain() {
-    this.prompt.emit("wait_for_command");
+  _quit() {
+    process.stdin.pause();
   }
 };

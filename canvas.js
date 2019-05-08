@@ -77,7 +77,9 @@ module.exports = class Canvas {
 
   // Using the colorPicker allows to change color of shape borders
   _bucketFill(color, x, y) {
-    const isTheSameColor = this.canvas[y][x] === this.colorPicker;
+    const isTheSameColor =
+      this.canvas[y] && this.canvas[y][x] === this.colorPicker;
+
     if (this._areCoordsOutsideBoundaries(x, y) || !isTheSameColor) {
       return;
     }
