@@ -4,6 +4,7 @@ const CanvasError = require("./Error");
 module.exports = class Paint {
   constructor() {
     this.canvas = new Canvas();
+    this.color = "x";
     this.commands = {
       QUIT: "Q",
       CANVAS: "C",
@@ -29,7 +30,7 @@ module.exports = class Paint {
     } catch (error) {
       if (error instanceof CanvasError) {
         console.log(error.message);
-        this.prompt.emit("wait_for_command");
+        this.waitForCommand();
       } else {
         throw error;
       }
@@ -53,7 +54,7 @@ module.exports = class Paint {
       case this.commands.PRINT:
         return this._showScreen();
       case this.commands.EMPTY:
-        return this._askAgain();
+        return this.waitForCommand();
       default:
         throw new CanvasError("Wrong command");
     }
@@ -62,35 +63,31 @@ module.exports = class Paint {
   _start(args) {
     this.canvas.setCanvas(args);
     this.canvas.printCanvas();
-    this.prompt.emit("wait_for_command");
+    this.waitForCommand();
     return this.canvas;
   }
 
   _playLine(args) {
-    this.canvas.drawLine("x", args);
+    this.canvas.drawLine(this.color, args);
     this.canvas.printCanvas();
-    this.prompt.emit("wait_for_command");
+    this.waitForCommand();
   }
 
   _playRectangle(args) {
-    this.canvas.drawRectangle("x", args);
+    this.canvas.drawRectangle(this.color, args);
     this.canvas.printCanvas();
-    this.prompt.emit("wait_for_command");
+    this.waitForCommand();
   }
 
   _playBucket(args) {
     this.canvas.drawBucket(args);
     this.canvas.printCanvas();
-    this.prompt.emit("wait_for_command");
-  }
-
-  _askAgain() {
-    this.prompt.emit("wait_for_command");
+    this.waitForCommand();
   }
 
   _showScreen() {
     this.canvas.printCanvas();
-    this.prompt.emit("wait_for_command");
+    this.waitForCommand();
   }
 
   _quit() {
