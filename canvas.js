@@ -1,10 +1,12 @@
 module.exports = class Canvas {
   constructor() {
     this.edges = 2;
+    this.coordsNumber = 2;
+    this.rectCoordsNumbers = 4;
   }
 
   setCanvas(coords) {
-    this._validateInputs(coords, 2);
+    this._validateInputs(coords, this.coordsNumber);
     this._setCanvasDimensions(coords);
     this._drawCanvas();
     return this;
@@ -26,7 +28,7 @@ module.exports = class Canvas {
   drawBucket(args) {
     const [x, y, color] = args;
     this._validateCanvas();
-    this._validateInputs([x, y], 2);
+    this._validateInputs([x, y], this.coordsNumber);
     this._validateColor(color);
     this._validateBoundaries([x, y]);
     this._bucketFill(color, x, y);
@@ -104,7 +106,7 @@ module.exports = class Canvas {
 
   _validateShape(color, coords) {
     this._validateCanvas();
-    this._validateInputs(coords, 4);
+    this._validateInputs(coords, this.rectCoordsNumbers);
     this._validateColor(color);
     this._validateBoundaries(coords);
   }

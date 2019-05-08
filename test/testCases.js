@@ -96,3 +96,35 @@ exports.rectangles = [
     coords: [2, 1, 3, 2]
   }
 ];
+
+exports.buckets = [
+  {
+    color: "o",
+    canvas: [20, 4],
+    lines: [
+      {
+        color: "x",
+        coords: [1, 2, 6, 2]
+      },
+      {
+        color: "r",
+        coords: [6, 3, 6, 4]
+      }
+    ],
+    rectangles: [
+      {
+        color: "i",
+        coords: [14, 1, 18, 3]
+      }
+    ],
+    coords: [10, 3],
+    expected: [
+      "----------------------",
+      "|oooooooooooooiiiiioo|",
+      "|xxxxxxoooooooi   ioo|",
+      "|     roooooooiiiiioo|",
+      "|     roooooooooooooo|",
+      "----------------------"
+    ]
+  }
+];

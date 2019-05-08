@@ -40,6 +40,14 @@ describe("Canvas", function() {
     });
   });
 
+  describe("drawBucket()", function() {
+    it("should fill the entire area connected to (x,y) with colour c", function() {
+      testCases.buckets.forEach(function(bucket) {
+        test.checkBucket(bucket);
+      });
+    });
+  });
+
   describe("_validateInputs()", function() {
     testCases.canvasValidation.forEach(function(test) {
       it(`should throw if ${test.description}`, function() {

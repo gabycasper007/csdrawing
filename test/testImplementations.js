@@ -53,6 +53,34 @@ exports.checkRectangle = function(rectangle) {
   }
 };
 
+exports.checkBucket = function(bucket) {
+  let canvasInstance = _getCanvasWithBucket(bucket);
+  let height = bucket.expected.length;
+  for (let row = 0; row < height; row++) {
+    expect(canvasInstance.canvas[row].join("")).to.equal(bucket.expected[row]);
+  }
+};
+
+function _getCanvasWithBucket(bucket) {
+  let canvasInstance = new Canvas(bucket);
+  canvasInstance = canvasInstance.setCanvas(bucket.canvas);
+
+  bucket.lines.forEach(function(line) {
+    canvasInstance = canvasInstance.drawLine(line.color, line.coords);
+  });
+
+  bucket.rectangles.forEach(function(rectangle) {
+    canvasInstance = canvasInstance.drawRectangle(
+      rectangle.color,
+      rectangle.coords
+    );
+  });
+
+  canvasInstance = canvasInstance.drawBucket([...bucket.coords, bucket.color]);
+
+  return canvasInstance;
+}
+
 function _getRectangleBorder(width, color, x1, x2) {
   let border = "|";
   border += " ".repeat(x1 - 1);
