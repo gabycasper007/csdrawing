@@ -1,38 +1,51 @@
 exports.canvasValidation = [
   {
-    description: "coordinates don't match",
-    coords: [5, 2],
-    length: 3
+    description: "coordinates number doesn't match",
+    tests: [
+      {
+        coords: [5, 2],
+        length: 3
+      },
+      {
+        coords: [5, 2],
+        length: 1
+      }
+    ]
   },
   {
     description: "coordinates aren't numbers",
-    coords: ["a", 2],
-    length: 2
+    tests: [
+      {
+        coords: ["a", 2]
+      },
+      {
+        coords: [6, "y"]
+      }
+    ]
   },
   {
     description: "coordinates aren't integers",
-    coords: [4.5, 2],
-    length: 2
+    tests: [
+      {
+        coords: [4.5, 2]
+      },
+      {
+        coords: [8, 23.5]
+      }
+    ]
   },
   {
     description: "coordinates are less than 1",
-    coords: [0, 2],
-    length: 2
-  },
-  {
-    description: "coordinates aren't numbers",
-    coords: [6, "y"],
-    length: 2
-  },
-  {
-    description: "coordinates aren't integers",
-    coords: [8, 23.5],
-    length: 2
-  },
-  {
-    description: "coordinates are less than 1",
-    coords: [4, -17],
-    length: 2
+    tests: [
+      {
+        coords: [0, 2],
+        length: 2
+      },
+      {
+        coords: [4, -17],
+        length: 2
+      }
+    ]
   }
 ];
 
@@ -126,5 +139,57 @@ exports.buckets = [
       "|     roooooooooooooo|",
       "----------------------"
     ]
+  },
+  {
+    color: "6",
+    canvas: [8, 6],
+    lines: [],
+    rectangles: [
+      {
+        color: "x",
+        coords: [2, 2, 6, 5]
+      }
+    ],
+    coords: [4, 3],
+    expected: [
+      "----------",
+      "|        |",
+      "| xxxxx  |",
+      "| x666x  |",
+      "| x666x  |",
+      "| xxxxx  |",
+      "|        |",
+      "----------"
+    ]
+  },
+  {
+    color: "o",
+    canvas: [8, 6],
+    lines: [],
+    rectangles: [
+      {
+        color: "x",
+        coords: [2, 2, 6, 5]
+      }
+    ],
+    coords: [2, 2],
+    expected: [
+      "----------",
+      "|        |",
+      "| ooooo  |",
+      "| o   o  |",
+      "| o   o  |",
+      "| ooooo  |",
+      "|        |",
+      "----------"
+    ]
   }
+];
+
+exports.colors = [8, "rt"];
+exports.diagonalLines = [
+  [1, 2, 3, 4],
+  [5, 1, 7, 3],
+  [8, 2, 2, 8],
+  [1, 4, 4, 1]
 ];

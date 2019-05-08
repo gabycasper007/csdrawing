@@ -31,6 +31,7 @@ module.exports = class Canvas {
     this._validateInputs([x, y], this.coordsNumber);
     this._validateColor(color);
     this._validateBoundaries([x, y]);
+    this.colorPicker = this.canvas[y][x];
     this._bucketFill(color, x, y);
     return this;
   }
@@ -74,11 +75,13 @@ module.exports = class Canvas {
     this.height = parseInt(coords[1]) + this.edges;
   }
 
+  // Using the colorPicker allows to change color of shape borders
   _bucketFill(color, x, y) {
-    if (this._areCoordsOutsideBoundaries(x, y) || this.canvas[y][x] !== " ") {
+    const isTheSameColor = this.canvas[y][x] === this.colorPicker;
+    if (this._areCoordsOutsideBoundaries(x, y) || !isTheSameColor) {
       return;
     }
-    if (this.canvas[y][x] == " ") {
+    if (isTheSameColor) {
       this.canvas[y][x] = color;
     }
     this._bucketFill(color, x + 1, y);
@@ -154,18 +157,14 @@ module.exports = class Canvas {
     } else {
       for (let i = 0, coord; i < length; i++) {
         coord = parseFloat(inputs[i]);
-        this._validateCoordinate(coord);
+        if (Number.isNaN(coord)) {
+          throw new Error("Coordinates need to be numbers!");
+        } else if (!Number.isInteger(coord)) {
+          throw new Error("Coordinates need to be integers!");
+        } else if (coord < 1) {
+          throw new Error("Coordinates must be at least 1!");
+        }
       }
-    }
-  }
-
-  _validateCoordinate(coord) {
-    if (Number.isNaN(coord)) {
-      throw new Error("Coordinates need to be numbers!");
-    } else if (!Number.isInteger(coord)) {
-      throw new Error("Coordinates need to be integers!");
-    } else if (coord < 1) {
-      throw new Error("Coordinates must be at least 1!");
     }
   }
 };
