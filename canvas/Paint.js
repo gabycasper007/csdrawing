@@ -1,4 +1,5 @@
 const Canvas = require("./Canvas");
+const CanvasError = require("./Error");
 
 module.exports = class Paint {
   constructor() {
@@ -25,9 +26,13 @@ module.exports = class Paint {
   tryCommand(command) {
     try {
       this.executeCommand(command);
-    } catch (err) {
-      console.log(err);
-      this.prompt.emit("wait_for_command");
+    } catch (error) {
+      if (error instanceof CanvasError) {
+        console.log(error.message);
+        this.prompt.emit("wait_for_command");
+      } else {
+        throw error;
+      }
     }
   }
 
@@ -46,11 +51,11 @@ module.exports = class Paint {
       case this.commands.QUIT:
         return this._quit();
       case this.commands.PRINT:
-        return this._showScreen(prompt);
+        return this._showScreen();
       case this.commands.EMPTY:
-        return this._askAgain(prompt);
+        return this._askAgain();
       default:
-        throw new Error("Wrong command");
+        throw new CanvasError("Wrong command");
     }
   }
 

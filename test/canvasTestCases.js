@@ -63,6 +63,11 @@ exports.horizontalLines = [
     coords: [2, 1, 6, 1]
   },
   {
+    color: "x",
+    canvas: [9, 5],
+    coords: [6, 1, 2, 1]
+  },
+  {
     color: "o",
     canvas: [8, 16],
     coords: [1, 16, 8, 16]
@@ -89,6 +94,11 @@ exports.verticalLines = [
     color: "j",
     canvas: [5, 16],
     coords: [1, 2, 1, 16]
+  },
+  {
+    color: "f",
+    canvas: [8, 12],
+    coords: [1, 12, 1, 2]
   }
 ];
 
@@ -107,6 +117,21 @@ exports.rectangles = [
     color: "r",
     canvas: [4, 8],
     coords: [2, 1, 3, 2]
+  },
+  {
+    color: "z",
+    canvas: [7, 12],
+    coords: [7, 12, 1, 1]
+  },
+  {
+    color: "v",
+    canvas: [4, 8],
+    coords: [3, 7, 2, 3]
+  },
+  {
+    color: "t",
+    canvas: [4, 8],
+    coords: [3, 1, 2, 3]
   }
 ];
 

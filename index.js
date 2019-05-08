@@ -1,6 +1,6 @@
 const EventEmitter = require("events");
 const prompt = new EventEmitter();
-const Paint = require("./Paint");
+const Paint = require("./canvas/Paint");
 const document = new Paint();
 
 process.stdin.on("data", data => processData(data, prompt));

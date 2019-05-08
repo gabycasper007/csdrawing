@@ -1,4 +1,4 @@
-const Canvas = require("../Canvas");
+const Canvas = require("../canvas/Canvas");
 
 module.exports = {
   getCanvasWithBucket,
@@ -74,7 +74,6 @@ function getCanvasWithRectangle(rectangle) {
 
 function horizontalLine(color, canvasWidth, x1, x2) {
   let line = "|";
-
   line += " ".repeat(x1 - 1);
   line += color.repeat(x2 - x1 + 1);
   line += " ".repeat(canvasWidth - x2);

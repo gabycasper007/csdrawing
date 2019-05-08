@@ -1,3 +1,5 @@
+const CanvasError = require("./Error");
+
 module.exports = class Canvas {
   constructor() {
     this.edges = 2;
@@ -93,6 +95,16 @@ module.exports = class Canvas {
   }
 
   _createLine(color, x1, y1, x2, y2) {
+    if (x1 > x2) {
+      // This swap allows line creation from right to left
+      [x1, x2] = [x2, x1];
+    }
+
+    if (y1 > y2) {
+      // This swap allows line creation from down to bottom
+      [y1, y2] = [y2, y1];
+    }
+
     for (let col = y1; col <= y2; col++) {
       for (let row = x1; row <= x2; row++) {
         this.canvas[col][row] = color;
@@ -118,20 +130,20 @@ module.exports = class Canvas {
 
   _validateColor(color) {
     if (typeof color !== "string" || color.length !== 1) {
-      throw new Error("Color must be a one character");
+      throw new CanvasError("Color must be a one character");
     }
   }
 
   _validateCanvas() {
     if (!this.canvas) {
-      throw new Error("Canvas is not initalized!");
+      throw new CanvasError("Canvas is not initalized!");
     }
   }
 
   _validateBoundaries(coords) {
     for (let i = 0, length = coords.length; i < length - 1; i += 2) {
       if (this._areCoordsOutsideBoundaries(coords[i], coords[i + 1])) {
-        throw new Error("Coordinates out of boundary");
+        throw new CanvasError("Coordinates out of boundary");
       }
     }
   }
@@ -147,7 +159,7 @@ module.exports = class Canvas {
 
   _validateStraightLine(x1, y1, x2, y2) {
     if (x1 !== x2 && y1 !== y2) {
-      throw new Error("I can only draw straight lines so far!");
+      throw new CanvasError("I can only draw straight lines so far!");
     }
   }
 
@@ -155,16 +167,16 @@ module.exports = class Canvas {
     const hasWrongNumberOfInputs = inputs.length !== length;
 
     if (hasWrongNumberOfInputs) {
-      throw new Error(`I need ${length} coordinates!`);
+      throw new CanvasError(`I need ${length} coordinates!`);
     } else {
       for (let i = 0, coord; i < length; i++) {
         coord = parseFloat(inputs[i]);
         if (Number.isNaN(coord)) {
-          throw new Error("Coordinates need to be numbers!");
+          throw new CanvasError("Coordinates need to be numbers!");
         } else if (!Number.isInteger(coord)) {
-          throw new Error("Coordinates need to be integers!");
+          throw new CanvasError("Coordinates need to be integers!");
         } else if (coord < 1) {
-          throw new Error("Coordinates must be at least 1!");
+          throw new CanvasError("Coordinates must be at least 1!");
         }
       }
     }
