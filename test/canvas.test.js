@@ -10,27 +10,33 @@ describe("Canvas", function() {
     canvasInstance = new Canvas();
   });
 
-  it("setCanvas() should create the canvas", function() {
-    testCases.canvasCoordinates.forEach(function(testCase) {
-      test.checkCanvas(testCase);
+  describe("setCanvas()", function() {
+    it("should create the canvas", function() {
+      testCases.canvasCoordinates.forEach(function(testCase) {
+        test.checkCanvas(testCase);
+      });
     });
   });
 
-  it("drawLine() should create a horizontal line", function() {
-    testCases.horizontalLines.forEach(function(line) {
-      test.checkHorizontalLine(line);
+  describe("drawLine()", function() {
+    it("should create a horizontal line", function() {
+      testCases.horizontalLines.forEach(function(line) {
+        test.checkHorizontalLine(line);
+      });
+    });
+
+    it("should create a vertical line", function() {
+      testCases.verticalLines.forEach(function(line) {
+        test.checkVerticalLine(line);
+      });
     });
   });
 
-  it("drawLine() should create a vertical line", function() {
-    testCases.verticalLines.forEach(function(line) {
-      test.checkVerticalLine(line);
-    });
-  });
-
-  it("drawRectangle() should create a rectangle", function() {
-    testCases.rectangles.forEach(function(rectangle) {
-      test.checkRectangle(rectangle);
+  describe("drawRectangle()", function() {
+    it("should create a rectangle", function() {
+      testCases.rectangles.forEach(function(rectangle) {
+        test.checkRectangle(rectangle);
+      });
     });
   });
 
