@@ -79,6 +79,7 @@ module.exports = class Paint {
 
   _playBucket(args) {
     this.canvas.drawBucket(args);
+    this.canvas.printCanvas();
     this.prompt.emit("wait_for_command");
   }
 

@@ -30,7 +30,7 @@ module.exports = class Canvas {
     this._validateColor(color);
     this._validateBoundaries([x, y]);
     this._bucketFill(color, x, y);
-    this.printCanvas();
+    return this;
   }
 
   printCanvas() {
