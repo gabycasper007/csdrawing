@@ -1,7 +1,15 @@
 const Canvas = require("../Canvas");
 const expect = require("chai").expect;
 
-exports.checkCanvas = function(coords) {
+module.exports = {
+  checkCanvas,
+  checkHorizontalLine,
+  checkVerticalLine,
+  checkRectangle,
+  checkBucket
+};
+
+function checkCanvas(coords) {
   let canvasInstance = new Canvas();
   let x1 = coords[0];
   let verticalBorder = "-".repeat(x1 + 2);
@@ -17,9 +25,9 @@ exports.checkCanvas = function(coords) {
       "|" + " ".repeat(x1) + "|"
     );
   }
-};
+}
 
-exports.checkHorizontalLine = function(line) {
+function checkHorizontalLine(line) {
   let [x1, y1, x2] = line.coords;
   let canvasWidth = line.canvas[0];
 
@@ -27,17 +35,17 @@ exports.checkHorizontalLine = function(line) {
   expect(canvasInstance.canvas[y1].join("")).to.equal(
     _horizontalLine(line.color, canvasWidth, x1, x2)
   );
-};
+}
 
-exports.checkVerticalLine = function(line) {
+function checkVerticalLine(line) {
   let canvasInstance = _getCanvasWithLine(line);
   let [x1, y1, , y2] = line.coords;
   for (let row = y1; row < y2; row++) {
     expect(canvasInstance.canvas[row][x1]).to.equal(line.color);
   }
-};
+}
 
-exports.checkRectangle = function(rectangle) {
+function checkRectangle(rectangle) {
   let canvasInstance = _getCanvasWithRectangle(rectangle);
   let [x1, y1, x2, y2] = rectangle.coords;
   let width = rectangle.canvas[0];
@@ -51,15 +59,15 @@ exports.checkRectangle = function(rectangle) {
   for (let row = y1 + 1; row < y2; row++) {
     expect(canvasInstance.canvas[row].join("")).to.equal(line);
   }
-};
+}
 
-exports.checkBucket = function(bucket) {
+function checkBucket(bucket) {
   let canvasInstance = _getCanvasWithBucket(bucket);
   let height = bucket.expected.length;
   for (let row = 0; row < height; row++) {
     expect(canvasInstance.canvas[row].join("")).to.equal(bucket.expected[row]);
   }
-};
+}
 
 function _getCanvasWithBucket(bucket) {
   let canvasInstance = new Canvas(bucket);
