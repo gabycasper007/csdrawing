@@ -13,6 +13,7 @@ module.exports = class extends Command {
     this._validateShape(this.canvas, color, coords);
     this._validateStraightLine(...coords);
     this._createLine(color, ...coords);
+    return this.canvas;
   }
 
   _validateStraightLine(x1, y1, x2, y2) {

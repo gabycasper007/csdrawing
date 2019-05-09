@@ -33,7 +33,7 @@ describe("Canvas", function() {
   });
 
   describe("drawBucket()", function() {
-    it("should fill the entire area connected to (x,y) with colour c", function() {
+    it("should fill the entire area connected to (x,y) with colour", function() {
       for (let bucket of testCases.buckets) {
         test.checkBucket(bucket);
       }

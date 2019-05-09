@@ -13,6 +13,7 @@ module.exports = class extends LineCommand {
   drawRectangle(color, coords) {
     this._validateShape(this.canvas, color, coords);
     this._createRectangle(color, ...coords);
+    return this.canvas;
   }
 
   _createRectangle(color, x1, y1, x2, y2) {

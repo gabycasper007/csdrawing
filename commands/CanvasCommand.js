@@ -13,6 +13,7 @@ module.exports = class extends Command {
     this._validateInputs(coords, this.canvas.coordsNumber);
     this._setCanvasDimensions(coords);
     this._buildCanvas();
+    return this.canvas;
   }
 
   _setCanvasDimensions(coords) {

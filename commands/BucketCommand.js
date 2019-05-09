@@ -11,7 +11,7 @@ module.exports = class extends Command {
 
   drawBucket(coords) {
     const [x, y, color] = coords;
-    this._validateCanvas();
+    this._validateCanvas(this.canvas);
     this._validateInputs(
       coords.slice(0, coords.length - 1),
       this.canvas.coordsNumber
@@ -20,6 +20,7 @@ module.exports = class extends Command {
     this._validateBoundaries(this.canvas, coords);
     this.colorPicker = this.canvas.content[y][x];
     this._bucketFill(color, x, y);
+    return this.canvas;
   }
 
   _bucketFill(color, x, y) {

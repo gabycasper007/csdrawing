@@ -1,32 +1,34 @@
 const expect = require("chai").expect;
-const Canvas = require("../paint/Canvas");
 const testCases = require("./canvasTestCases");
+const Command = require("../commands/Command");
+const LineCommand = require("../commands/LineCommand");
 
-let canvasInstance;
+let commandInstance;
 
 describe("Validation", function() {
   beforeEach(function() {
-    canvasInstance = new Canvas();
+    commandInstance = new Command();
   });
 
   describe("_validateInputs()", function() {
+    commandInstance = new Command();
     for (let validation of testCases.canvasValidation) {
       it(`should throw if ${validation.description}`, function() {
-        canvasInstance = new Canvas();
         for (let test of validation.tests) {
           expect(
-            canvasInstance._validateInputs.bind(this, test.coords, test.length)
+            commandInstance._validateInputs.bind(this, test.coords, test.length)
           ).to.throw();
         }
       });
     }
   });
 
-  describe("_validateLine()", function() {
+  describe("_validateStraightLine()", function() {
     it(`should throw for diagonals`, function() {
+      commandInstance = new LineCommand();
       for (let line of testCases.diagonalLines) {
         expect(
-          canvasInstance._validateStraightLine.bind(this, ...line)
+          commandInstance._validateStraightLine.bind(this, ...line)
         ).to.throw();
       }
     });
@@ -35,7 +37,7 @@ describe("Validation", function() {
   describe("_validateColor()", function() {
     it(`should throw for invalid colors`, function() {
       for (let color of testCases.colors) {
-        expect(canvasInstance._validateColor.bind(this, color)).to.throw();
+        expect(commandInstance._validateColor.bind(this, color)).to.throw();
       }
     });
   });
