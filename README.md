@@ -6,7 +6,7 @@ If you have that installed, you then need to install dependencies with `npm inst
 
 # Testing the app
 
-Tests can be done by running `npm test` in the project's root folder.
+Tests can be done by running `npm test` in the project's root folder. This app uses the next testing tools: [Mocha](https://mochajs.org/) and [Chai](https://www.chaijs.com/)
 
 # Architecture
 
