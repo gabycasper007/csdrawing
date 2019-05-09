@@ -1,5 +1,5 @@
 const Canvas = require("./Canvas");
-const CanvasError = require("./Error");
+const CanvasError = require("./CanvasError");
 const Strategy = require("../commands/CommandStrategy");
 const Command = require("../commands/Command");
 

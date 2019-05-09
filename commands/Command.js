@@ -1,4 +1,4 @@
-const CanvasError = require("../paint/Error");
+const CanvasError = require("../paint/CanvasError");
 
 module.exports = class {
   static wait() {
@@ -20,7 +20,7 @@ module.exports = class {
 
   _validateColor(color) {
     if (typeof color !== "string" || color.length !== 1) {
-      throw new CanvasError("Color must be a one character");
+      throw new CanvasError("Color must be a one character!");
     }
   }
 
@@ -33,7 +33,7 @@ module.exports = class {
   _validateBoundaries(canvas, coords) {
     for (let i = 0, length = coords.length; i < length - 1; i += 2) {
       if (this._areCoordsOutsideBoundaries(canvas, coords[i], coords[i + 1])) {
-        throw new CanvasError("Coordinates out of boundary");
+        throw new CanvasError("Coordinates out of boundary!");
       }
     }
   }

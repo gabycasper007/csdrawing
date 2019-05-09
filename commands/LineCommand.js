@@ -1,5 +1,5 @@
 const Command = require("./Command");
-const CanvasError = require("../paint/Error");
+const CanvasError = require("../paint/CanvasError");
 module.exports = class extends Command {
   execute(canvas, args) {
     this.canvas = canvas;
@@ -11,14 +11,17 @@ module.exports = class extends Command {
 
   drawLine(color, coords) {
     this._validateShape(this.canvas, color, coords);
-    this._validateStraightLine(...coords);
+    this._validateLine(...coords);
+    coords = coords.map(coord => parseInt(coord));
     this._createLine(color, ...coords);
     return this.canvas;
   }
 
-  _validateStraightLine(x1, y1, x2, y2) {
+  _validateLine(x1, y1, x2, y2) {
     if (x1 !== x2 && y1 !== y2) {
       throw new CanvasError("I can only draw straight lines so far!");
+    } else if (x1 === x2 && y1 === y2 && x1 === y1) {
+      throw new CanvasError("That's not a line!");
     }
   }
 

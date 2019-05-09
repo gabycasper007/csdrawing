@@ -1,4 +1,4 @@
-const CanvasError = require("../paint/Error");
+const CanvasError = require("../paint/CanvasError");
 const CanvasCommand = require("./CanvasCommand");
 const LineCommand = require("./LineCommand");
 const RectangleCommand = require("./RectangleCommand");

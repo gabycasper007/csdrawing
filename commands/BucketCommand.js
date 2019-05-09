@@ -10,7 +10,9 @@ module.exports = class extends Command {
   }
 
   drawBucket(coords) {
-    const [x, y, color] = coords;
+    let [x, y, color] = coords;
+    x = parseInt(x);
+    y = parseInt(y);
     this._validateCanvas(this.canvas);
     this._validateInputs(
       coords.slice(0, coords.length - 1),

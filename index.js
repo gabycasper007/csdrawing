@@ -16,9 +16,6 @@ prompt.on("command", command => {
 Command.wait();
 
 function processData(data, prompt) {
-  const parsedData = data
-    .toString()
-    .trim()
-    .toUpperCase();
+  const parsedData = data.toString().trim();
   prompt.emit("command", parsedData);
 }

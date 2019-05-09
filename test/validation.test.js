@@ -22,12 +22,12 @@ describe("Validation", function() {
     }
   });
 
-  describe("_validateStraightLine()", function() {
+  describe("_validateLine()", function() {
     it(`should throw for diagonals`, function() {
       commandInstance = new LineCommand();
       for (let line of testCases.diagonalLines) {
         expect(
-          commandInstance._validateStraightLine.bind(this, ...line)
+          commandInstance._validateLine.bind(this, ...line)
         ).to.throw();
       }
     });
@@ -37,14 +37,6 @@ describe("Validation", function() {
     it(`should throw for invalid colors`, function() {
       for (let color of testCases.colors) {
         expect(commandInstance._validateColor.bind(this, color)).to.throw();
-      }
-    });
-  });
-
-  describe("_validateShape()", function() {
-    it(`should throw if canvas not initialized`, function() {
-      for (let shape of testCases.shapes) {
-        expect(commandInstance._validateColor.bind(this, shape)).to.throw();
       }
     });
   });
