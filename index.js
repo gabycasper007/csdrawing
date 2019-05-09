@@ -9,7 +9,7 @@ process.stdin.on("data", data => processData(data, prompt));
 
 prompt.on("command", command => {
   document.setPrompt(prompt);
-  return document.tryCommand(command);
+  return document.paint(command);
 });
 
 // START THE APP

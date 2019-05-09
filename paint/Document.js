@@ -5,15 +5,14 @@ const Command = require("../commands/Command");
 
 module.exports = class Document {
   constructor() {
-    this.canvas = new Canvas();
-    this.strategy = new Strategy(this.canvas);
+    this.strategy = new Strategy(new Canvas());
   }
 
   setPrompt(prompt) {
     this.prompt = prompt;
   }
 
-  tryCommand(command) {
+  paint(command) {
     try {
       this.executeStrategy(command);
     } catch (error) {
