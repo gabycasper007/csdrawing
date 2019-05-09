@@ -1,5 +1,5 @@
 const expect = require("chai").expect;
-const Canvas = require("../canvas/Canvas");
+const Canvas = require("../paint/Canvas");
 const testCases = require("./canvasTestCases");
 
 let canvasInstance;

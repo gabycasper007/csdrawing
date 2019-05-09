@@ -27,12 +27,12 @@ module.exports = class Canvas {
     return this;
   }
 
-  drawBucket(args) {
-    const [x, y, color] = args;
+  drawBucket(coords) {
+    const [x, y, color] = coords;
     this._validateCanvas();
-    this._validateInputs([x, y], this.coordsNumber);
+    this._validateInputs(coords.slice(0, coords.length - 1), this.coordsNumber);
     this._validateColor(color);
-    this._validateBoundaries([x, y]);
+    this._validateBoundaries(coords);
     this.colorPicker = this.canvas[y][x];
     this._bucketFill(color, x, y);
     return this;

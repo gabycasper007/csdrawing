@@ -1,4 +1,4 @@
-const Canvas = require("../canvas/Canvas");
+const Canvas = require("../paint/Canvas");
 
 module.exports = {
   getCanvasWithBucket,

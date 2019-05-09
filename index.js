@@ -1,7 +1,9 @@
 const EventEmitter = require("events");
+const Document = require("./paint/Document");
+const Command = require("./commands/Command");
+
 const prompt = new EventEmitter();
-const Paint = require("./canvas/Paint");
-const document = new Paint();
+const document = new Document();
 
 process.stdin.on("data", data => processData(data, prompt));
 
@@ -11,7 +13,7 @@ prompt.on("command", command => {
 });
 
 // START THE APP
-document.waitForCommand();
+Command.wait();
 
 function processData(data, prompt) {
   const parsedData = data
