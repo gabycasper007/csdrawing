@@ -11,7 +11,6 @@ describe("Validation", function() {
   });
 
   describe("_validateInputs()", function() {
-    commandInstance = new Command();
     for (let validation of testCases.canvasValidation) {
       it(`should throw if ${validation.description}`, function() {
         for (let test of validation.tests) {
@@ -38,6 +37,14 @@ describe("Validation", function() {
     it(`should throw for invalid colors`, function() {
       for (let color of testCases.colors) {
         expect(commandInstance._validateColor.bind(this, color)).to.throw();
+      }
+    });
+  });
+
+  describe("_validateShape()", function() {
+    it(`should throw if canvas not initialized`, function() {
+      for (let shape of testCases.shapes) {
+        expect(commandInstance._validateColor.bind(this, shape)).to.throw();
       }
     });
   });
