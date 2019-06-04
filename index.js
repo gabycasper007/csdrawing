@@ -14,4 +14,3 @@ process.stdin.on("data", command => document.paint(command));
 
 // START THE APP
 prompter.listCommands();
-prompter.wait();

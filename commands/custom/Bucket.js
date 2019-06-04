@@ -1,6 +1,13 @@
-const Command = require("./Command");
+const Command = require("../Command");
+const shortName = "B";
+const args = "x y c";
+const description = "Fills the entire area connected to (x,y) with 'colour' c.";
 
 module.exports = class extends Command {
+  constructor(validator) {
+    super(validator);
+  }
+
   run(canvas, prompter, args) {
     this.canvas = canvas;
     this.drawBucket(args);
@@ -39,5 +46,17 @@ module.exports = class extends Command {
     this._bucketFill(color, x - 1, y);
     this._bucketFill(color, x, y - 1);
     this._bucketFill(color, x, y + 1);
+  }
+
+  getShortName() {
+    return shortName.toUpperCase();
+  }
+
+  getArgs() {
+    return args;
+  }
+
+  getDescription() {
+    return description;
   }
 };

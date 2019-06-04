@@ -1,4 +1,7 @@
-const Command = require("./Command");
+const Command = require("../Command");
+const shortName = "R";
+const args = "x1 y1 x2 y2";
+const description = "Creates a new rectangle.";
 
 module.exports = class extends Command {
   constructor(validator, line) {
@@ -28,5 +31,17 @@ module.exports = class extends Command {
     this.line._createLine(color, x1, y1, x1, y2);
     this.line._createLine(color, x2, y1, x2, y2);
     this.line._createLine(color, x1, y2, x2, y2);
+  }
+
+  getShortName() {
+    return shortName.toUpperCase();
+  }
+
+  getArgs() {
+    return args;
+  }
+
+  getDescription() {
+    return description;
   }
 };

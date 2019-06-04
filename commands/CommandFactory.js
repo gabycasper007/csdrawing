@@ -1,49 +1,52 @@
 const CanvasError = require("../paint/CanvasError");
-const commands = require("../commands.json");
-const Validator = require("../validators/Validator");
+const DefaultValidator = require("../validators/Validator");
+const fs = require("fs");
+const path = require("path");
+const directoryPath = path.join(__dirname, "custom");
+let commands = {};
 
 module.exports = class {
   constructor() {
-    this.commands = {};
-    for (let [type, { file }] of Object.entries(commands)) {
-      const command = require(`./${file}`);
-      let customValidator;
-      type = type.toUpperCase();
+    fs.readdirSync(directoryPath).forEach(file => this.getFile(file));
+  }
 
-      try {
-        customValidator = require(`../validators/${file}`);
+  getFile(file) {
+    const fileName = file.split(".")[0];
+    const commandClass = require(path.join(directoryPath, fileName));
+    let customValidator;
+    let commandInstance;
 
-        if (file === "Rectangle") {
-          const Line = require(`./Line`);
-          this.commands[type] = new command(new customValidator(), new Line());
-        } else {
-          this.commands[type] = new command(new customValidator());
-        }
-      } catch {
-        this.commands[type] = new command(new Validator());
+    try {
+      customValidator = require(`../validators/${fileName}`);
+
+      if (fileName === "Rectangle") {
+        const Line = require(`./custom/Line`);
+        commandInstance = new commandClass(new customValidator(), new Line());
+      } else {
+        commandInstance = new commandClass(new customValidator());
       }
+    } catch {
+      commandInstance = new commandClass(new DefaultValidator());
     }
+
+    commands[commandInstance.getShortName()] = commandInstance;
   }
 
   get(type) {
     type = type.toUpperCase();
 
-    if (type in this.commands) {
-      return this.commands[type];
+    if (type in commands) {
+      return commands[type];
     } else {
       throw new CanvasError("Wrong command");
     }
   }
 
-  getAll() {
-    return this.commands;
-  }
-
   add(type, file) {
     type = type.toUpperCase();
 
-    this.commands = {
-      ...this.commands,
+    commands = {
+      ...commands,
       [type]: file
     };
   }

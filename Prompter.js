@@ -1,5 +1,5 @@
 const chalk = require("chalk");
-const commands = require("./commands.json");
+const HelpCommand = require("./commands/custom/Help");
 
 module.exports = class {
   wait() {
@@ -7,16 +7,8 @@ module.exports = class {
   }
 
   listCommands() {
+    const help = new HelpCommand();
     console.log(chalk.bgGreen.black(" List of available commands: \n"));
-
-    for (const [type, { args, description }] of Object.entries(commands)) {
-      console.log(
-        chalk.magenta(type, args, this.createTabs(args), description)
-      );
-    }
-  }
-
-  createTabs(args) {
-    return "\t".repeat(1 + (args.length < 4));
+    help.run(null, this);
   }
 };

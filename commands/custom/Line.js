@@ -1,4 +1,7 @@
-const Command = require("./Command");
+const Command = require("../Command");
+const shortName = "L";
+const args = "x1 y1 x2 y2";
+const description = "Creates a new line.";
 
 module.exports = class extends Command {
   run(canvas, prompter, args) {
@@ -33,5 +36,17 @@ module.exports = class extends Command {
         this.canvas.content[col][row] = color;
       }
     }
+  }
+
+  getShortName() {
+    return shortName.toUpperCase();
+  }
+
+  getArgs() {
+    return args;
+  }
+
+  getDescription() {
+    return description;
   }
 };

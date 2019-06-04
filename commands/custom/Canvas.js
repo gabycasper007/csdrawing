@@ -1,4 +1,7 @@
-const Command = require("./Command");
+const Command = require("../Command");
+const shortName = "C";
+const args = "w h";
+const description = "Creates a new canvas of width w and height h.";
 
 module.exports = class extends Command {
   run(canvas, prompter, args) {
@@ -47,5 +50,17 @@ module.exports = class extends Command {
         this.canvas.content[row][col] = " ";
       }
     }
+  }
+
+  getShortName() {
+    return shortName.toUpperCase();
+  }
+
+  getArgs() {
+    return args;
+  }
+
+  getDescription() {
+    return description;
   }
 };

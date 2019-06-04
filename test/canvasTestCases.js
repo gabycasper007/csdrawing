@@ -9,7 +9,7 @@ exports.diagonalLines = [
 
 exports.canvasValidation = [
   {
-    description: "coordinates number doesn't match",
+    description: "coordinates number don't match",
     tests: [
       {
         coords: [5, 2],

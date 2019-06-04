@@ -1,5 +1,5 @@
 const Validator = require("../validators/Validator");
-const BucketCommand = require("../commands/Bucket");
+const BucketCommand = require("../commands/custom/Bucket");
 const helpers = require("./helpers");
 
 module.exports = {

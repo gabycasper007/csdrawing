@@ -33,11 +33,13 @@ describe("Validation", function() {
   });
 
   describe("Line validation", function() {
-    it(`should throw for diagonals`, function() {
-      let lineValidator = new LineValidator();
-      for (let line of testCases.diagonalLines) {
-        expect(lineValidator._validateLine.bind(this, ...line)).to.throw();
-      }
+    describe("_validateLine", function() {
+      it(`should throw for diagonals`, function() {
+        let lineValidator = new LineValidator();
+        for (let line of testCases.diagonalLines) {
+          expect(lineValidator._validateLine.bind(this, ...line)).to.throw();
+        }
+      });
     });
   });
 });

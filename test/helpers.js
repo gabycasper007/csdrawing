@@ -1,10 +1,10 @@
-const CanvasCommand = require("../commands/Canvas");
+const CanvasCommand = require("../commands/custom/Canvas");
 const Canvas = require("../paint/Canvas");
 const expect = require("chai").expect;
 const LineValidator = require("../validators/Line");
 const RectangleValidator = require("../validators/Rectangle");
-const LineCommand = require("../commands/Line");
-const RectangleCommand = require("../commands/Rectangle");
+const LineCommand = require("../commands/custom/Line");
+const RectangleCommand = require("../commands/custom/Rectangle");
 const Validator = require("../validators/Validator");
 
 module.exports = {
