@@ -1,11 +1,12 @@
 const Command = require("./Command");
 const CanvasError = require("../paint/CanvasError");
+
 module.exports = class extends Command {
-  execute(canvas, args) {
+  execute(canvas, prompter, args) {
     this.canvas = canvas;
     this.drawLine("x", args);
     this.printCanvas(this.canvas);
-    Command.wait();
+    prompter.wait();
     return this.canvas;
   }
 

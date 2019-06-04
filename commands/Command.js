@@ -1,13 +1,12 @@
 const CanvasError = require("../paint/CanvasError");
 
 module.exports = class {
-  static wait() {
-    process.stdout.write("\nenter command: ");
-  }
-
   printCanvas(canvas) {
     for (let row = 0; row < canvas.height; row++) {
-      console.log(canvas.content[row].join(""));
+      for (let col = 0; col < canvas.width; col++) {
+        process.stdout.write(canvas.content[row][col]);
+      }
+      process.stdout.write("\n");
     }
   }
 
@@ -26,7 +25,7 @@ module.exports = class {
 
   _validateCanvas(canvas) {
     if (!canvas.content) {
-      throw new CanvasError("Canvas is not initalized!");
+      throw new CanvasError("Canvas is not initialized!");
     }
   }
 

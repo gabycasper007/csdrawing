@@ -1,9 +1,9 @@
 const Command = require("./Command");
 
 module.exports = class extends Command {
-  execute(canvas) {
+  execute(canvas, prompter) {
     this.printCanvas(canvas);
-    Command.wait();
+    prompter.wait();
     return canvas;
   }
 };

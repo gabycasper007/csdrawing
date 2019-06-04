@@ -1,7 +1,7 @@
 const expect = require("chai").expect;
 const testCases = require("./canvasTestCases");
 const Command = require("../commands/Command");
-const LineCommand = require("../commands/LineCommand");
+const LineCommand = require("../commands/Line");
 
 let commandInstance;
 
@@ -26,9 +26,7 @@ describe("Validation", function() {
     it(`should throw for diagonals`, function() {
       commandInstance = new LineCommand();
       for (let line of testCases.diagonalLines) {
-        expect(
-          commandInstance._validateLine.bind(this, ...line)
-        ).to.throw();
+        expect(commandInstance._validateLine.bind(this, ...line)).to.throw();
       }
     });
   });

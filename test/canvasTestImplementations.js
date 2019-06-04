@@ -1,4 +1,4 @@
-const CanvasCommand = require("../commands/CanvasCommand");
+const CanvasCommand = require("../commands/Canvas");
 const Canvas = require("../paint/Canvas");
 const expect = require("chai").expect;
 const helpers = require("./helpers");

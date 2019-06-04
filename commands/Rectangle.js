@@ -1,13 +1,12 @@
-const Command = require("./Command");
-const LineCommand = require("./LineCommand");
+const Line = require("./Line");
 const CanvasError = require("../paint/CanvasError");
 
-module.exports = class extends LineCommand {
-  execute(canvas, args) {
+module.exports = class extends Line {
+  execute(canvas, prompter, args) {
     this.canvas = canvas;
     this.drawRectangle("x", args);
     this.printCanvas(this.canvas);
-    Command.wait();
+    prompter.wait();
     return this.canvas;
   }
 

@@ -1,35 +1,22 @@
-const Canvas = require("./Canvas");
 const CanvasError = require("./CanvasError");
-const Strategy = require("../commands/CommandStrategy");
-const Command = require("../commands/Command");
+const chalk = require("chalk");
 
 module.exports = class Document {
-  constructor() {
-    this.strategy = new Strategy(new Canvas());
-  }
-
-  setPrompt(prompt) {
-    this.prompt = prompt;
+  constructor(prompter, strategy) {
+    this.strategy = strategy;
+    this.prompter = prompter;
   }
 
   paint(command) {
     try {
-      this.executeStrategy(command);
+      this.strategy.execute(command);
     } catch (error) {
       if (error instanceof CanvasError) {
-        console.log(error.message);
-        Command.wait();
+        console.log(chalk.red(error.message));
+        this.prompter.wait();
       } else {
         throw error;
       }
     }
-  }
-
-  executeStrategy(command) {
-    let [commandType, ...commandArgs] = command.split(/\s+/);
-    commandType = commandType.trim().toUpperCase();
-
-    this.strategy.changeCommandType(commandType);
-    this.strategy.execute(commandArgs);
   }
 };

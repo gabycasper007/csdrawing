@@ -1,21 +1,17 @@
-const EventEmitter = require("events");
 const Document = require("./paint/Document");
-const Command = require("./commands/Command");
+const Prompter = require("./Prompter");
+const Canvas = require("./paint/Canvas");
+const CommandStrategy = require("./commands/CommandStrategy");
+const CommandFactory = require("./commands/CommandFactory");
 
-const prompt = new EventEmitter();
-const document = new Document();
+const prompter = new Prompter();
+const document = new Document(
+  prompter,
+  new CommandStrategy(new Canvas(), new CommandFactory(), prompter)
+);
 
-process.stdin.on("data", data => processData(data, prompt));
-
-prompt.on("command", command => {
-  document.setPrompt(prompt);
-  return document.paint(command);
-});
+process.stdin.on("data", command => document.paint(command));
 
 // START THE APP
-Command.wait();
-
-function processData(data, prompt) {
-  const parsedData = data.toString().trim();
-  prompt.emit("command", parsedData);
-}
+prompter.listCommands();
+prompter.wait();

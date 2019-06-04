@@ -1,8 +1,8 @@
 const Canvas = require("../paint/Canvas");
-const LineCommand = require("../commands/LineCommand");
-const CanvasCommand = require("../commands/CanvasCommand");
-const RectangleCommand = require("../commands/RectangleCommand");
-const BucketCommand = require("../commands/BucketCommand");
+const LineCommand = require("../commands/Line");
+const CanvasCommand = require("../commands/Canvas");
+const RectangleCommand = require("../commands/Rectangle");
+const BucketCommand = require("../commands/Bucket");
 
 module.exports = {
   getCanvasWithBucket,

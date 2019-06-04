@@ -1,0 +1,32 @@
+{
+  "C": {
+    "file": "Canvas",
+    "args": "w h",
+    "description": "Creates a new canvas of width w and height h."
+  },
+  "L": {
+    "file": "Line",
+    "args": "x1 y1 x2 y2",
+    "description": "Creates a new line from (x1,y1) to (x2,y2)."
+  },
+  "R": {
+    "file": "Rectangle",
+    "args": "x1 y1 x2 y2",
+    "description": "Creates a new rectangle."
+  },
+  "B": {
+    "file": "Bucket",
+    "args": "x y c",
+    "description": "Fills the entire area connected to (x,y) with 'colour' c."
+  },
+  "Q": {
+    "file": "Quit",
+    "args": "",
+    "description": "Quits the program."
+  },
+  "P": {
+    "file": "Print",
+    "args": "",
+    "description": "Prints the canvas."
+  }
+}
