@@ -13,13 +13,13 @@ describe("Canvas", function() {
   describe("drawLine()", function() {
     it("should create a horizontal line", function() {
       for (let line of testCases.horizontalLines) {
-        test.checkHorizontalLine(line);
+        test.checkLine(line);
       }
     });
 
     it("should create a vertical line", function() {
       for (let line of testCases.verticalLines) {
-        test.checkVerticalLine(line);
+        test.checkLine(line);
       }
     });
   });

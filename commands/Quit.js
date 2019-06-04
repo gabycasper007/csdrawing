@@ -1,5 +1,5 @@
 module.exports = class {
-  execute() {
+  run() {
     process.stdin.pause();
   }
 };

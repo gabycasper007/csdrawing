@@ -1,7 +1,7 @@
 const Command = require("./Command");
 
 module.exports = class extends Command {
-  execute(canvas, prompter, args) {
+  run(canvas, prompter, args) {
     this.canvas = canvas;
     this.setCanvas(args);
     this.printCanvas(this.canvas);
@@ -10,7 +10,7 @@ module.exports = class extends Command {
   }
 
   setCanvas(coords) {
-    this._validateInputs(coords, this.canvas.coordsNumber);
+    this.validator._validateInputs(coords, this.canvas.coordsNumber);
     this._setCanvasDimensions(coords);
     this._buildCanvas();
     return this.canvas;

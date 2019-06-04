@@ -8,7 +8,7 @@ module.exports = class {
   execute(command) {
     let [type, ...args] = this.parseInput(command);
     this.command = this.commandFactory.get(type);
-    this.command.execute(this.canvas, this.prompter, args);
+    this.command.run(this.canvas, this.prompter, args);
   }
 
   parseInput(command) {

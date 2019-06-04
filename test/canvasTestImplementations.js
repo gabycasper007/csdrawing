@@ -1,95 +1,70 @@
-const CanvasCommand = require("../commands/Canvas");
-const Canvas = require("../paint/Canvas");
-const expect = require("chai").expect;
+const Validator = require("../validators/Validator");
+const BucketCommand = require("../commands/Bucket");
 const helpers = require("./helpers");
 
 module.exports = {
   checkCanvas,
-  checkHorizontalLine,
-  checkVerticalLine,
+  checkLine,
   checkRectangle,
   checkBucket
 };
 
-function checkCanvas(coords) {
-  let x1 = coords[0];
-  let horizontalBorder = "-".repeat(x1 + 2);
-  let firstRow = 0;
-  let lastRow = coords[1] + 1;
-  let canvasInstance;
-  let canvasCommand = new CanvasCommand();
+function checkCanvas(testCase) {
+  let canvasInstance = helpers.createCanvasCommand(testCase.given);
 
-  canvasCommand.canvas = new Canvas();
-  canvasInstance = canvasCommand.setCanvas(coords);
-
-  expect(canvasInstance.content[firstRow].join("")).to.equal(horizontalBorder);
-  expect(canvasInstance.content[lastRow].join("")).to.equal(horizontalBorder);
-
-  for (let row = 1; row < lastRow; row++) {
-    expect(canvasInstance.content[row].join("")).to.equal(
-      "|" + " ".repeat(x1) + "|"
-    );
-  }
-}
-
-function checkHorizontalLine(line) {
-  let [x1, y1, x2] = line.coords;
-  let canvasWidth = line.canvas[0];
-  let canvasInstance;
-
-  if (x1 > x2) {
-    [x1, x2] = [x2, x1];
-  }
-
-  canvasInstance = helpers.getCanvasWithLine(line);
-
-  expect(canvasInstance.content[y1].join("")).to.equal(
-    helpers.horizontalLine(line.color, canvasWidth, x1, x2)
+  helpers.compareLineByLine(
+    testCase.given[1] + 2,
+    testCase.expected,
+    canvasInstance.content
   );
 }
 
-function checkVerticalLine(line) {
-  let canvasInstance = helpers.getCanvasWithLine(line);
-  let [x1, y1, , y2] = line.coords;
+function checkLine(testCase) {
+  let lineCommand = helpers.createLineCommand(
+    helpers.createCanvasCommand(testCase.given.canvas)
+  );
 
-  if (y1 > y2) {
-    [y1, y2] = [y2, y1];
-  }
-  for (let row = y1; row < y2; row++) {
-    expect(canvasInstance.content[row][x1]).to.equal(line.color);
-  }
+  let canvasInstance = lineCommand.drawLine(
+    testCase.given.color,
+    testCase.given.coords
+  );
+
+  helpers.compareLineByLine(
+    testCase.given.canvas[1] + 2,
+    testCase.expected,
+    canvasInstance.content
+  );
 }
 
-function checkRectangle(rectangle) {
-  let canvasInstance = helpers.getCanvasWithRectangle(rectangle);
-  let [x1, y1, x2, y2] = rectangle.coords;
-  let width = rectangle.canvas[0];
-  let color = rectangle.color;
+function checkRectangle(testCase) {
+  let canvas = helpers.createCanvasCommand(testCase.given.canvas);
+  let lineCommand = helpers.createLineCommand(canvas);
+  let rectangleCommand = helpers.createRectangleCommand(lineCommand, canvas);
 
-  // These swaps allow rectangle creation from any direction
-  if (x1 > x2) {
-    [x1, x2] = [x2, x1];
-  }
-  if (y1 > y2) {
-    [y1, y2] = [y2, y1];
-  }
+  let canvasInstance = rectangleCommand.drawRectangle(
+    testCase.given.color,
+    testCase.given.coords
+  );
 
-  let border = helpers.getRectangleBorder(width, color, x1, x2);
-  let line = helpers.getRectangleLine(width, color, x1, x2);
-
-  expect(canvasInstance.content[y1].join("")).to.equal(border);
-  expect(canvasInstance.content[y2].join("")).to.equal(border);
-
-  for (let row = y1 + 1; row < y2; row++) {
-    expect(canvasInstance.content[row].join("")).to.equal(line);
-  }
+  helpers.compareLineByLine(
+    testCase.given.canvas[1] + 2,
+    testCase.expected,
+    canvasInstance.content
+  );
 }
 
-function checkBucket(bucket) {
-  let canvasInstance = helpers.getCanvasWithBucket(bucket);
-  let height = bucket.expected.length;
+function checkBucket(testCase) {
+  let bucketCommand = new BucketCommand(new Validator());
+  bucketCommand.canvas = helpers.drawShapesOnCanvas(testCase.given);
 
-  for (let row = 0; row < height; row++) {
-    expect(canvasInstance.content[row].join("")).to.equal(bucket.expected[row]);
-  }
+  let canvasInstance = bucketCommand.drawBucket([
+    ...testCase.given.coords,
+    testCase.given.color
+  ]);
+
+  helpers.compareLineByLine(
+    testCase.given.canvas[1] + 2,
+    testCase.expected,
+    canvasInstance.content
+  );
 }

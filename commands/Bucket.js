@@ -1,7 +1,7 @@
 const Command = require("./Command");
 
 module.exports = class extends Command {
-  execute(canvas, prompter, args) {
+  run(canvas, prompter, args) {
     this.canvas = canvas;
     this.drawBucket(args);
     this.printCanvas(this.canvas);
@@ -13,13 +13,13 @@ module.exports = class extends Command {
     let [x, y, color] = coords;
     x = parseInt(x);
     y = parseInt(y);
-    this._validateCanvas(this.canvas);
-    this._validateInputs(
+    this.validator._validateCanvas(this.canvas);
+    this.validator._validateInputs(
       coords.slice(0, coords.length - 1),
       this.canvas.coordsNumber
     );
-    this._validateColor(color);
-    this._validateBoundaries(this.canvas, coords);
+    this.validator._validateColor(color);
+    this.validator._validateBoundaries(this.canvas, coords);
     this.colorPicker = this.canvas.content[y][x];
     this._bucketFill(color, x, y);
     return this.canvas;
@@ -29,7 +29,7 @@ module.exports = class extends Command {
     const isTheSameColor =
       this.canvas.content[y] && this.canvas.content[y][x] === this.colorPicker;
 
-    if (this._areCoordsOutsideBoundaries(x, y) || !isTheSameColor) {
+    if (this.validator._areCoordsOutsideBoundaries(x, y) || !isTheSameColor) {
       return;
     }
     if (isTheSameColor) {

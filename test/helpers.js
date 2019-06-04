@@ -1,106 +1,66 @@
-const Canvas = require("../paint/Canvas");
-const LineCommand = require("../commands/Line");
 const CanvasCommand = require("../commands/Canvas");
+const Canvas = require("../paint/Canvas");
+const expect = require("chai").expect;
+const LineValidator = require("../validators/Line");
+const RectangleValidator = require("../validators/Rectangle");
+const LineCommand = require("../commands/Line");
 const RectangleCommand = require("../commands/Rectangle");
-const BucketCommand = require("../commands/Bucket");
+const Validator = require("../validators/Validator");
 
 module.exports = {
-  getCanvasWithBucket,
-  createCanvasLines,
-  createRectangles,
-  getRectangleBorder,
-  getRectangleLine,
-  getCanvasWithLine,
-  getCanvasWithRectangle,
-  horizontalLine
+  compareLineByLine,
+  createCanvasCommand,
+  createLineCommand,
+  createRectangleCommand,
+  drawShapesOnCanvas
 };
 
-function getCanvasWithBucket(bucket) {
-  let bucketCommand = new BucketCommand();
-  let canvasCommand = new CanvasCommand();
-  let lineCommand = new LineCommand();
-  let rectangleCommand = new RectangleCommand();
+function compareLineByLine(height, expected, content) {
+  for (let row = 0; row < height; row++) {
+    expect(content[row].join("")).to.equal(expected[row]);
+  }
+}
 
+function createCanvasCommand(coords) {
+  let canvasCommand = new CanvasCommand(new Validator());
   canvasCommand.canvas = new Canvas();
-  lineCommand.canvas = canvasCommand.setCanvas(bucket.canvas);
+  canvasInstance = canvasCommand.setCanvas(coords);
+  return canvasInstance;
+}
 
-  for (let line of bucket.lines) {
+function createLineCommand(canvas) {
+  let lineCommand = new LineCommand(new LineValidator());
+  lineCommand.canvas = canvas;
+  return lineCommand;
+}
+
+function createRectangleCommand(lineCommand, canvas) {
+  let rectangleCommand = new RectangleCommand(
+    new RectangleValidator(),
+    lineCommand
+  );
+  rectangleCommand.canvas = canvas;
+  return rectangleCommand;
+}
+
+function drawShapesOnCanvas(given) {
+  let canvas = createCanvasCommand(given.canvas);
+  let lineCommand = createLineCommand(canvas);
+  let rectangleCommand = createRectangleCommand(lineCommand, canvas);
+
+  // Draw lines
+  for (let line of given.lines) {
     lineCommand.canvas = lineCommand.drawLine(line.color, line.coords);
   }
-
   rectangleCommand.canvas = lineCommand.canvas;
-  for (let rectangle of bucket.rectangles) {
+
+  // Draw Rectangles
+  for (let rectangle of given.rectangles) {
     rectangleCommand.canvas = rectangleCommand.drawRectangle(
       rectangle.color,
       rectangle.coords
     );
   }
 
-  bucketCommand.canvas = rectangleCommand.canvas;
-  return bucketCommand.drawBucket([...bucket.coords, bucket.color]);
-}
-
-function createCanvasLines(canvasInstance, bucket) {
-  bucket.lines.forEach(function(line) {
-    canvasInstance = canvasInstance.drawLine(line.color, line.coords);
-  });
-  return canvasInstance;
-}
-
-function createRectangles(canvasInstance, bucket) {
-  bucket.rectangles.forEach(function(rectangle) {
-    canvasInstance = canvasInstance.drawRectangle(
-      rectangle.color,
-      rectangle.coords
-    );
-  });
-  return canvasInstance;
-}
-
-function getRectangleBorder(width, color, x1, x2) {
-  let border = "|";
-  border += " ".repeat(x1 - 1);
-  border += color.repeat(x2 - x1 + 1);
-  border += " ".repeat(width - x2);
-  border += "|";
-  return border;
-}
-
-function getRectangleLine(width, color, x1, x2) {
-  let line = "|";
-  line += " ".repeat(x1 - 1);
-  line += color + " ".repeat(x2 - x1 - 1);
-  line += color + " ".repeat(width - x2);
-  line += "|";
-  return line;
-}
-
-function getCanvasWithLine(line) {
-  let lineCommand = new LineCommand();
-  let canvasCommand = new CanvasCommand();
-
-  canvasCommand.canvas = new Canvas();
-  lineCommand.canvas = canvasCommand.setCanvas(line.canvas);
-
-  return lineCommand.drawLine(line.color, line.coords);
-}
-
-function getCanvasWithRectangle(rectangle) {
-  let rectangleCommand = new RectangleCommand();
-  let canvasCommand = new CanvasCommand();
-
-  canvasCommand.canvas = new Canvas();
-  rectangleCommand.canvas = canvasCommand.setCanvas(rectangle.canvas);
-
-  return rectangleCommand.drawRectangle(rectangle.color, rectangle.coords);
-}
-
-function horizontalLine(color, canvasWidth, x1, x2) {
-  let line = "|";
-  line += " ".repeat(x1 - 1);
-  line += color.repeat(x2 - x1 + 1);
-  line += " ".repeat(canvasWidth - x2);
-  line += "|";
-
-  return line;
+  return rectangleCommand.canvas;
 }

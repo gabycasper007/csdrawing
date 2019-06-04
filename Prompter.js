@@ -3,7 +3,7 @@ const commands = require("./commands.json");
 
 module.exports = class {
   wait() {
-    process.stdout.write("\nenter command: ");
+    process.stdout.write(chalk.yellow("\nEnter command: "));
   }
 
   listCommands() {
