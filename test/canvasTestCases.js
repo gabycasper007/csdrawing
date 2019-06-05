@@ -1,11 +1,6 @@
 exports.colors = [8, "rt"];
 
-exports.diagonalLines = [
-  [1, 2, 3, 4],
-  [5, 1, 7, 3],
-  [8, 2, 2, 8],
-  [1, 4, 4, 1]
-];
+exports.points = [[1, 1, 1, 1], [5, 5, 5, 5], [3, 3, 3, 3], [12, 12, 12, 12]];
 
 exports.canvasValidation = [
   {

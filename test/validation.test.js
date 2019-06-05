@@ -34,9 +34,9 @@ describe("Validation", function() {
 
   describe("Line validation", function() {
     describe("_validateLine", function() {
-      it(`should throw for diagonals`, function() {
+      it(`should throw for points`, function() {
         let lineValidator = new LineValidator();
-        for (let line of testCases.diagonalLines) {
+        for (let line of testCases.points) {
           expect(lineValidator._validateLine.bind(this, ...line)).to.throw();
         }
       });
