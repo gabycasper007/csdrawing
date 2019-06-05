@@ -38,20 +38,34 @@ module.exports = class {
   }
 
   _validateInputs(inputs, length) {
-    const hasWrongNumberOfInputs = inputs.length !== length;
+    this._checkRightNumberOfInputs(inputs, length);
+    this._checkIntegerInputs(inputs);
+    this._checkInputLargerThenOne(inputs);
+  }
 
+  _checkRightNumberOfInputs(inputs, length) {
+    const hasWrongNumberOfInputs = inputs.length !== length;
     if (hasWrongNumberOfInputs) {
       throw new CanvasError(`I need ${length} coordinates!`);
-    } else {
-      for (let i = 0, coord; i < length; i++) {
-        coord = parseFloat(inputs[i]);
-        if (Number.isNaN(coord)) {
-          throw new CanvasError("Coordinates need to be numbers!");
-        } else if (!Number.isInteger(coord)) {
-          throw new CanvasError("Coordinates need to be integers!");
-        } else if (coord < 1) {
-          throw new CanvasError("Coordinates must be at least 1!");
-        }
+    }
+  }
+
+  _checkIntegerInputs(inputs) {
+    for (let i = 0, coord, n = inputs.length; i < n; i++) {
+      coord = parseFloat(inputs[i]);
+      if (Number.isNaN(coord)) {
+        throw new CanvasError("Coordinates need to be numbers!");
+      } else if (!Number.isInteger(coord)) {
+        throw new CanvasError("Coordinates need to be integers!");
+      }
+    }
+  }
+
+  _checkInputLargerThenOne(inputs) {
+    for (let i = 0, coord, n = inputs.length; i < n; i++) {
+      coord = parseFloat(inputs[i]);
+      if (coord < 1) {
+        throw new CanvasError("Coordinates must be at least 1!");
       }
     }
   }

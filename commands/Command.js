@@ -39,4 +39,12 @@ module.exports = class {
       col === canvas.width - 1
     );
   }
+
+  isDrawable(y, x) {
+    return (
+      this.canvas.content[y] &&
+      this.canvas.content[y][x] &&
+      !["|", "-"].includes(this.canvas.content[y][x])
+    );
+  }
 };

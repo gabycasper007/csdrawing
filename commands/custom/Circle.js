@@ -96,14 +96,6 @@ module.exports = class extends Command {
     }
   }
 
-  isDrawable(y, x) {
-    return (
-      this.canvas.content[y] &&
-      this.canvas.content[y][x] &&
-      !["|", "-"].includes(this.canvas.content[y][x])
-    );
-  }
-
   validate(color, coords) {
     this.validator._validateCanvas(this.canvas);
     this.validator._validateInputs(coords, 3);

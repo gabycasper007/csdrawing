@@ -53,4 +53,12 @@ describe("Canvas", function() {
       }
     });
   });
+
+  describe("Bezier draw()", function() {
+    it("should create a bezier curve", function() {
+      for (let curve of testCases.bezierCurves) {
+        test.checkBezier(curve);
+      }
+    });
+  });
 });

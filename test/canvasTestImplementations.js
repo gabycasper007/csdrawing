@@ -1,6 +1,7 @@
 const Validator = require("../validators/Validator");
 const BucketCommand = require("../commands/custom/Bucket");
 const CircleCommand = require("../commands/custom/Circle");
+const BezierCommand = require("../commands/custom/Bezier");
 const helpers = require("./helpers");
 
 module.exports = {
@@ -8,7 +9,8 @@ module.exports = {
   checkLine,
   checkRectangle,
   checkBucket,
-  checkCircle
+  checkCircle,
+  checkBezier
 };
 
 function checkCanvas(testCase) {
@@ -76,6 +78,22 @@ function checkCircle(testCase) {
   circleCommand.canvas = helpers.createCanvasCommand(testCase.given.canvas);
 
   let canvasInstance = circleCommand.draw(
+    testCase.given.color,
+    testCase.given.coords
+  );
+
+  helpers.compareLineByLine(
+    testCase.given.canvas[1] + 2,
+    testCase.expected,
+    canvasInstance.content
+  );
+}
+
+function checkBezier(testCase) {
+  let bezierCommand = new BezierCommand(new Validator());
+  bezierCommand.canvas = helpers.createCanvasCommand(testCase.given.canvas);
+
+  let canvasInstance = bezierCommand.draw(
     testCase.given.color,
     testCase.given.coords
   );
