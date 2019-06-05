@@ -22,6 +22,12 @@ describe("Canvas", function() {
         test.checkLine(line);
       }
     });
+
+    it("should create a diagonal line", function() {
+      for (let line of testCases.diagonalLines) {
+        test.checkLine(line);
+      }
+    });
   });
 
   describe("Rectangle draw()", function() {

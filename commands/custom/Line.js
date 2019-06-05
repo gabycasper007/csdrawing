@@ -34,6 +34,8 @@ module.exports = class extends Command {
     }
   }
 
+  // Uses Bresenham's line algorithm
+  // https://en.wikipedia.org/wiki/Bresenham%27s_line_algorithm
   createVerticalLine(color, x1, y1, x2, y2) {
     if (Math.abs(y2 - y1) < Math.abs(x2 - x1)) {
       if (x1 > x2) {

@@ -11,6 +11,8 @@ module.exports = class extends Command {
     return this.canvas;
   }
 
+  // See https://en.wikipedia.org/wiki/Midpoint_circle_algorithm
+  // See https://www.geeksforgeeks.org/mid-point-circle-drawing-algorithm/
   midPointCircleDraw(color, [xc, yc, radius]) {
     let x = radius;
     let y = 0;
