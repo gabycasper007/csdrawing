@@ -61,4 +61,12 @@ describe("Canvas", function() {
       }
     });
   });
+
+  describe("Ellipse draw()", function() {
+    it("should create an ellipse", function() {
+      for (let ellipse of testCases.ellipses) {
+        test.checkEllipse(ellipse);
+      }
+    });
+  });
 });
