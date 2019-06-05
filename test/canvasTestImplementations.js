@@ -24,7 +24,7 @@ function checkLine(testCase) {
     helpers.createCanvasCommand(testCase.given.canvas)
   );
 
-  let canvasInstance = lineCommand.drawLine(
+  let canvasInstance = lineCommand.draw(
     testCase.given.color,
     testCase.given.coords
   );
@@ -41,7 +41,7 @@ function checkRectangle(testCase) {
   let lineCommand = helpers.createLineCommand(canvas);
   let rectangleCommand = helpers.createRectangleCommand(lineCommand, canvas);
 
-  let canvasInstance = rectangleCommand.drawRectangle(
+  let canvasInstance = rectangleCommand.draw(
     testCase.given.color,
     testCase.given.coords
   );
@@ -57,7 +57,7 @@ function checkBucket(testCase) {
   let bucketCommand = new BucketCommand(new Validator());
   bucketCommand.canvas = helpers.drawShapesOnCanvas(testCase.given);
 
-  let canvasInstance = bucketCommand.drawBucket([
+  let canvasInstance = bucketCommand.draw([
     ...testCase.given.coords,
     testCase.given.color
   ]);

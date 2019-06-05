@@ -6,10 +6,9 @@ const description = "Creates a new canvas of width w and height h.";
 module.exports = class extends Command {
   run(canvas, prompter, args) {
     this.canvas = canvas;
+    this.prompter = prompter;
     this.setCanvas(args);
-    this.printCanvas(this.canvas);
-    prompter.wait();
-    return this.canvas;
+    this.printCanvasAndWait();
   }
 
   setCanvas(coords) {

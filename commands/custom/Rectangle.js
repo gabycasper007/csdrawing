@@ -11,14 +11,13 @@ module.exports = class extends Command {
 
   run(canvas, prompter, args) {
     this.canvas = canvas;
+    this.prompter = prompter;
     this.line.canvas = canvas;
-    this.drawRectangle("x", args);
-    this.printCanvas(this.canvas);
-    prompter.wait();
-    return this.canvas;
+    this.draw("x", args);
+    this.printCanvasAndWait();
   }
 
-  drawRectangle(color, coords) {
+  draw(color, coords) {
     coords = coords.map(coord => parseInt(coord));
     this.validator._validateShape(this.canvas, color, coords);
     this.validator._validateRectangle(...coords);
@@ -27,10 +26,10 @@ module.exports = class extends Command {
   }
 
   _createRectangle(color, x1, y1, x2, y2) {
-    this.line._createLine(color, x1, y1, x2, y1);
-    this.line._createLine(color, x1, y1, x1, y2);
-    this.line._createLine(color, x2, y1, x2, y2);
-    this.line._createLine(color, x1, y2, x2, y2);
+    this.line.createLine(color, x1, y1, x2, y1);
+    this.line.createLine(color, x1, y1, x1, y2);
+    this.line.createLine(color, x2, y1, x2, y2);
+    this.line.createLine(color, x1, y2, x2, y2);
   }
 
   getShortName() {

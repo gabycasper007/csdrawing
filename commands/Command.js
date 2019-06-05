@@ -5,6 +5,19 @@ module.exports = class {
     this.validator = validator;
   }
 
+  run(canvas, prompter, args) {
+    this.canvas = canvas;
+    this.prompter = prompter;
+    this.draw("x", args);
+    this.printCanvasAndWait();
+  }
+
+  printCanvasAndWait() {
+    this.printCanvas(this.canvas);
+    this.prompter.wait();
+    return this.canvas;
+  }
+
   printCanvas(canvas) {
     for (let row = 0; row < canvas.height; row++) {
       for (let col = 0; col < canvas.width; col++) {

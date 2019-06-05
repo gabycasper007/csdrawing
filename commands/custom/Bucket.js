@@ -4,19 +4,14 @@ const args = "x y c";
 const description = "Fills the entire area connected to (x,y) with 'colour' c.";
 
 module.exports = class extends Command {
-  constructor(validator) {
-    super(validator);
-  }
-
   run(canvas, prompter, args) {
     this.canvas = canvas;
-    this.drawBucket(args);
-    this.printCanvas(this.canvas);
-    prompter.wait();
-    return this.canvas;
+    this.prompter = prompter;
+    this.draw(args);
+    this.printCanvasAndWait();
   }
 
-  drawBucket(coords) {
+  draw(coords) {
     let [x, y, color] = coords;
     x = parseInt(x);
     y = parseInt(y);

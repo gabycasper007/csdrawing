@@ -4,23 +4,15 @@ const args = "x1 y1 x2 y2";
 const description = "Creates a new line.";
 
 module.exports = class extends Command {
-  run(canvas, prompter, args) {
-    this.canvas = canvas;
-    this.drawLine("x", args);
-    this.printCanvas(this.canvas);
-    prompter.wait();
-    return this.canvas;
-  }
-
-  drawLine(color, coords) {
+  draw(color, coords) {
     this.validator._validateShape(this.canvas, color, coords);
     this.validator._validateLine(...coords);
     coords = coords.map(coord => parseInt(coord));
-    this._createLine(color, ...coords);
+    this.createLine(color, ...coords);
     return this.canvas;
   }
 
-  _createLine(color, x1, y1, x2, y2) {
+  createLine(color, x1, y1, x2, y2) {
     if (x1 > x2) {
       // This swap allows line creation from right to left
       [x1, x2] = [x2, x1];

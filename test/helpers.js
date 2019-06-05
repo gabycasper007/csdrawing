@@ -50,13 +50,13 @@ function drawShapesOnCanvas(given) {
 
   // Draw lines
   for (let line of given.lines) {
-    lineCommand.canvas = lineCommand.drawLine(line.color, line.coords);
+    lineCommand.canvas = lineCommand.draw(line.color, line.coords);
   }
   rectangleCommand.canvas = lineCommand.canvas;
 
   // Draw Rectangles
   for (let rectangle of given.rectangles) {
-    rectangleCommand.canvas = rectangleCommand.drawRectangle(
+    rectangleCommand.canvas = rectangleCommand.draw(
       rectangle.color,
       rectangle.coords
     );
