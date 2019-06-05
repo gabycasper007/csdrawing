@@ -1,4 +1,5 @@
 const Command = require("../Command");
+const Queue = require("../../Queue");
 const shortName = "B";
 const args = "x y c";
 const description = "Fills the entire area connected to (x,y) with 'colour' c.";
@@ -32,19 +33,39 @@ module.exports = class extends Command {
   }
 
   _bucketFill(color, x, y) {
-    const isTheSameColor =
-      this.canvas.content[y] && this.canvas.content[y][x] === this.colorPicker;
+    const queue = new Queue();
 
-    if (this.validator._areCoordsOutsideBoundaries(x, y) || !isTheSameColor) {
+    if (color === this.colorPicker) {
       return;
     }
-    if (isTheSameColor) {
-      this.canvas.content[y][x] = color;
+
+    this.canvas.content[y][x] = color;
+    queue.enqueue({ x, y });
+
+    while (queue.isNotEmpty()) {
+      const point = queue.dequeue();
+
+      if (this.colorPicker === this.canvas.content[point.y - 1][point.x]) {
+        this.canvas.content[point.y - 1][point.x] = color;
+        queue.enqueue({ x: point.x, y: point.y - 1 });
+      }
+      if (this.colorPicker === this.canvas.content[point.y + 1][point.x]) {
+        this.canvas.content[point.y + 1][point.x] = color;
+        queue.enqueue({ x: point.x, y: point.y + 1 });
+      }
+      if (this.colorPicker === this.canvas.content[point.y][point.x - 1]) {
+        this.canvas.content[point.y][point.x - 1] = color;
+        queue.enqueue({ x: point.x - 1, y: point.y });
+      }
+      if (this.colorPicker === this.canvas.content[point.y][point.x + 1]) {
+        this.canvas.content[point.y][point.x + 1] = color;
+        queue.enqueue({ x: point.x + 1, y: point.y });
+      }
     }
-    this._bucketFill(color, x + 1, y);
-    this._bucketFill(color, x - 1, y);
-    this._bucketFill(color, x, y - 1);
-    this._bucketFill(color, x, y + 1);
+  }
+
+  getSize() {
+    return size;
   }
 
   getShortName() {
