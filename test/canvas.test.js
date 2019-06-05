@@ -10,7 +10,7 @@ describe("Canvas", function() {
     });
   });
 
-  describe("draw()", function() {
+  describe("Line draw()", function() {
     it("should create a horizontal line", function() {
       for (let line of testCases.horizontalLines) {
         test.checkLine(line);
@@ -24,7 +24,7 @@ describe("Canvas", function() {
     });
   });
 
-  describe("draw()", function() {
+  describe("Rectangle draw()", function() {
     it("should create a rectangle", function() {
       for (let rectangle of testCases.rectangles) {
         test.checkRectangle(rectangle);
@@ -32,10 +32,18 @@ describe("Canvas", function() {
     });
   });
 
-  describe("draw()", function() {
+  describe("Bucket draw()", function() {
     it("should fill the entire area connected to (x,y) with colour", function() {
       for (let bucket of testCases.buckets) {
         test.checkBucket(bucket);
+      }
+    });
+  });
+
+  describe("Circle draw()", function() {
+    it("should create a circle", function() {
+      for (let circle of testCases.circles) {
+        test.checkCircle(circle);
       }
     });
   });

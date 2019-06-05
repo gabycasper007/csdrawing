@@ -1,12 +1,14 @@
 const Validator = require("../validators/Validator");
 const BucketCommand = require("../commands/custom/Bucket");
+const CircleCommand = require("../commands/custom/Circle");
 const helpers = require("./helpers");
 
 module.exports = {
   checkCanvas,
   checkLine,
   checkRectangle,
-  checkBucket
+  checkBucket,
+  checkCircle
 };
 
 function checkCanvas(testCase) {
@@ -61,6 +63,22 @@ function checkBucket(testCase) {
     ...testCase.given.coords,
     testCase.given.color
   ]);
+
+  helpers.compareLineByLine(
+    testCase.given.canvas[1] + 2,
+    testCase.expected,
+    canvasInstance.content
+  );
+}
+
+function checkCircle(testCase) {
+  let circleCommand = new CircleCommand(new Validator());
+  circleCommand.canvas = helpers.createCanvasCommand(testCase.given.canvas);
+
+  let canvasInstance = circleCommand.draw(
+    testCase.given.color,
+    testCase.given.coords
+  );
 
   helpers.compareLineByLine(
     testCase.given.canvas[1] + 2,

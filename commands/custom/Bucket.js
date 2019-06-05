@@ -15,6 +15,13 @@ module.exports = class extends Command {
     let [x, y, color] = coords;
     x = parseInt(x);
     y = parseInt(y);
+    this.validateBucket(color, coords);
+    this.colorPicker = this.canvas.content[y][x];
+    this._bucketFill(color, x, y);
+    return this.canvas;
+  }
+
+  validateBucket(color, coords) {
     this.validator._validateCanvas(this.canvas);
     this.validator._validateInputs(
       coords.slice(0, coords.length - 1),
@@ -22,9 +29,6 @@ module.exports = class extends Command {
     );
     this.validator._validateColor(color);
     this.validator._validateBoundaries(this.canvas, coords);
-    this.colorPicker = this.canvas.content[y][x];
-    this._bucketFill(color, x, y);
-    return this.canvas;
   }
 
   _bucketFill(color, x, y) {
