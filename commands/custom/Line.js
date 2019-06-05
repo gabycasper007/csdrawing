@@ -14,7 +14,7 @@ module.exports = class extends Command {
 
   createLine(color, x1, y1, x2, y2) {
     if (x1 !== x2 && y1 !== y2) {
-      this.createVerticalLine(color, x1, y1, x2, y2);
+      this.createDiagonalLine(color, x1, y1, x2, y2);
     } else {
       if (x1 > x2) {
         // This swap allows line creation from right to left
@@ -28,7 +28,9 @@ module.exports = class extends Command {
 
       for (let col = y1; col <= y2; col++) {
         for (let row = x1; row <= x2; row++) {
-          this.canvas.content[col][row] = color;
+          if (this.isDrawable(col, row)) {
+            this.canvas.content[col][row] = color;
+          }
         }
       }
     }
@@ -36,7 +38,7 @@ module.exports = class extends Command {
 
   // Uses Bresenham's line algorithm
   // https://en.wikipedia.org/wiki/Bresenham%27s_line_algorithm
-  createVerticalLine(color, x1, y1, x2, y2) {
+  createDiagonalLine(color, x1, y1, x2, y2) {
     if (Math.abs(y2 - y1) < Math.abs(x2 - x1)) {
       if (x1 > x2) {
         this.plotLineLow(color, x2, y2, x1, y1);
@@ -66,7 +68,9 @@ module.exports = class extends Command {
     let y = y1;
 
     for (let x = x1; x <= x2; x++) {
-      this.canvas.content[y][x] = color;
+      if (this.isDrawable(y, x)) {
+        this.canvas.content[y][x] = color;
+      }
       if (D > 0) {
         y = y + yi;
         D = D - 2 * dx;
@@ -87,7 +91,9 @@ module.exports = class extends Command {
     let x = x1;
 
     for (let y = y1; y <= y2; y++) {
-      this.canvas.content[y][x] = color;
+      if (this.isDrawable(y, x)) {
+        this.canvas.content[y][x] = color;
+      }
       if (D > 0) {
         x = x + xi;
         D = D - 2 * dy;

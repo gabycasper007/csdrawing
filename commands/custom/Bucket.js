@@ -64,10 +64,6 @@ module.exports = class extends Command {
     }
   }
 
-  getSize() {
-    return size;
-  }
-
   getShortName() {
     return shortName.toUpperCase();
   }

@@ -3,7 +3,10 @@ const DefaultValidator = require("../validators/Validator");
 const fs = require("fs");
 const path = require("path");
 const directoryPath = path.join(__dirname, "custom");
+const Line = require("./custom/Line");
 let commands = {};
+
+const hasLines = ["Rectangle"];
 
 module.exports = class {
   constructor() {
@@ -15,21 +18,22 @@ module.exports = class {
     const commandClass = require(path.join(directoryPath, fileName));
     let customValidator;
     let commandInstance;
+    let validator;
 
     try {
       customValidator = require(`../validators/${fileName}`);
-
-      if (fileName === "Rectangle") {
-        const Line = require(`./custom/Line`);
-        commandInstance = new commandClass(new customValidator(), new Line());
-      } else {
-        commandInstance = new commandClass(new customValidator());
-      }
+      validator = new customValidator();
     } catch {
-      commandInstance = new commandClass(new DefaultValidator());
+      validator = new DefaultValidator();
     }
 
-    commands[commandInstance.getShortName()] = commandInstance;
+    if (hasLines.includes(fileName)) {
+      commandInstance = new commandClass(validator, new Line());
+    } else {
+      commandInstance = new commandClass(validator);
+    }
+
+    this.add(commandInstance.getShortName(), commandInstance);
   }
 
   get(type) {
