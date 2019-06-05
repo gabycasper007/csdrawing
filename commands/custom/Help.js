@@ -30,11 +30,12 @@ module.exports = class extends Command {
   }
 
   createTabs(args) {
-    return "\t".repeat(1 + (args.length < 4));
+    return "\t".repeat(1 + (args.length < 4) + (args.length < 15) * 2);
   }
 
   getShortName() {
     return shortName.toUpperCase();
+    ``;
   }
 
   getArgs() {
